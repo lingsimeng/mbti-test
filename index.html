@@ -3,310 +3,226 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MBTI性格診断 | あなたはどのタイプ？🌸</title>
-  <meta name="description" content="無料のMBTI性格診断テスト！20問の質問に答えてあなたの16タイプを診断。結果をLINEやXでシェアしよう♪">
-  <meta property="og:title" content="MBTI性格診断 | あなたはどのタイプ？🌸">
-  <meta property="og:description" content="無料のMBTI性格診断テスト！20問の質問に答えてあなたの16タイプを診断。">
-  <meta property="og:type" content="website">
-
+  <title>MBTI性格診断 | 無料・60問・本格派🌸</title>
+  <meta name="description" content="60問の本格MBTI性格診断！7段階評価で精度UP。あなたの16タイプをLINE・Xでシェアしよう♪">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:linear-gradient(135deg,#fde8f0 0%,#e8f4fd 50%,#f0fde8 100%);min-height:100vh;color:#444}
+    .wrap{max-width:680px;margin:0 auto;padding:16px 16px 60px}
 
-    body {
-      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-      background: linear-gradient(135deg, #fde8f0 0%, #e8f4fd 50%, #f0fde8 100%);
-      min-height: 100vh;
-      color: #444;
+    /* HEADER */
+    .site-header{text-align:center;padding:36px 0 28px}
+    .site-header .logo{font-size:52px;display:block;margin-bottom:6px}
+    .site-header h1{font-size:28px;font-weight:900;color:#e8699a;letter-spacing:1px;margin-bottom:4px}
+    .site-header p{color:#999;font-size:14px}
+
+    /* STEPS */
+    .steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:28px}
+    .step{background:rgba(255,255,255,.8);border-radius:18px;padding:16px 10px;text-align:center;box-shadow:0 2px 12px rgba(232,105,154,.1)}
+    .step .s-num{display:inline-block;background:linear-gradient(135deg,#f472b6,#a78bfa);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px;margin-bottom:8px;letter-spacing:1px}
+    .step .s-icon{font-size:28px;display:block;margin-bottom:6px}
+    .step .s-title{font-size:12px;font-weight:700;color:#555;line-height:1.4}
+
+    /* INTRO CARD */
+    .intro-card{background:rgba(255,255,255,.85);border-radius:24px;padding:24px;margin-bottom:24px;box-shadow:0 4px 20px rgba(232,105,154,.1)}
+    .intro-card p{font-size:15px;line-height:1.8;color:#666;text-align:center}
+
+    /* QUIZ FORM */
+    #quiz-form{display:none}
+    .dim-section{margin-bottom:8px}
+    .dim-header{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#f472b6,#a78bfa);border-radius:16px 16px 0 0;padding:14px 20px}
+    .dim-header .dim-icon{font-size:24px}
+    .dim-header h2{font-size:16px;font-weight:700;color:#fff}
+    .dim-header span{font-size:12px;color:rgba(255,255,255,.8);margin-left:auto}
+
+    .q-card{background:rgba(255,255,255,.88);padding:18px 20px;border-left:3px solid #f9a8d4;border-right:1px solid #f9e8f0;border-bottom:1px solid #f9e8f0}
+    .q-card:last-child{border-radius:0 0 16px 16px;border-bottom:none}
+    .q-num{font-size:11px;color:#d4a0bc;font-weight:700;letter-spacing:1px;margin-bottom:6px}
+    .q-text{font-size:15px;font-weight:600;color:#333;line-height:1.6;margin-bottom:14px}
+
+    /* 7-SCALE */
+    .scale-wrap{display:flex;flex-direction:column;gap:6px}
+    .scale-labels{display:flex;justify-content:space-between;font-size:10px;color:#bbb;padding:0 2px}
+    .scale-btns{display:flex;gap:4px;justify-content:center;align-items:center}
+    .scale-btns input[type=radio]{display:none}
+    .scale-btns label{
+      width:36px;height:36px;border-radius:50%;border:2px solid #f0d0e8;background:#fff;
+      display:flex;align-items:center;justify-content:center;cursor:pointer;
+      font-size:11px;font-weight:600;color:#ccc;transition:all .15s;flex-shrink:0
+    }
+    .scale-btns input[type=radio]:checked + label{
+      background:linear-gradient(135deg,#f472b6,#a78bfa);border-color:#f472b6;color:#fff;
+      transform:scale(1.15);box-shadow:0 2px 8px rgba(244,114,182,.4)
+    }
+    .scale-btns label:hover{border-color:#f472b6;color:#f472b6}
+
+    @media(max-width:400px){
+      .scale-btns label{width:30px;height:30px;font-size:10px}
+      .scale-labels{font-size:9px}
     }
 
-    .container {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 20px 16px 60px;
-    }
+    /* SUBMIT BTN */
+    .submit-wrap{text-align:center;padding:32px 0 8px;display:none}
+    .btn-submit{background:linear-gradient(135deg,#f472b6,#a78bfa);color:#fff;border:none;border-radius:50px;padding:18px 48px;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(244,114,182,.4);transition:all .2s;letter-spacing:.5px}
+    .btn-submit:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(244,114,182,.5)}
 
-    /* ヘッダー */
-    .header { text-align: center; padding: 32px 0 24px; }
-    .header .emoji-big { font-size: 56px; display: block; margin-bottom: 8px; }
-    .header h1 { font-size: 26px; color: #e8699a; font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; }
-    .header p { color: #888; font-size: 14px; }
+    /* PROGRESS STICKY */
+    .sticky-progress{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);padding:10px 20px;border-bottom:1px solid #f9e8f0;display:none}
+    .prog-row{display:flex;justify-content:space-between;font-size:12px;color:#aaa;margin-bottom:5px}
+    .prog-bar{background:#f0e0ec;border-radius:10px;height:6px;overflow:hidden}
+    .prog-fill{background:linear-gradient(90deg,#f472b6,#a78bfa);height:100%;border-radius:10px;transition:width .3s}
 
-    /* カード共通 */
-    .card {
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(8px);
-      border-radius: 24px;
-      padding: 28px 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 20px rgba(232,105,154,0.12);
-    }
+    /* LOADING */
+    #loading{display:none;text-align:center;padding:60px 20px}
+    .spinner{width:52px;height:52px;border:4px solid #f0d0e8;border-top-color:#f472b6;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* スタート画面 */
-    #start-screen .subtitle { font-size: 16px; line-height: 1.8; color: #666; margin-bottom: 24px; text-align: center; }
-    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
-    .info-item { background: #fdf0f6; border-radius: 14px; padding: 14px 12px; text-align: center; }
-    .info-item .icon { font-size: 24px; }
-    .info-item p { font-size: 13px; color: #888; margin-top: 4px; }
+    /* RESULT */
+    #result-screen{display:none}
+    .result-hero{background:rgba(255,255,255,.9);border-radius:24px;padding:32px 24px;margin-bottom:20px;text-align:center;box-shadow:0 4px 20px rgba(232,105,154,.12)}
+    .result-emoji{font-size:80px;display:block;margin-bottom:12px}
+    .type-badge{display:inline-block;background:linear-gradient(135deg,#f472b6,#a78bfa);color:#fff;font-size:40px;font-weight:900;letter-spacing:5px;padding:12px 32px;border-radius:18px;margin-bottom:10px}
+    .type-nick{font-size:22px;color:#e8699a;font-weight:700;margin-bottom:16px}
+    .type-desc{font-size:15px;line-height:1.85;color:#555;margin-bottom:18px;text-align:left}
+    .traits{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px}
+    .trait{background:#fdf0f8;border:1.5px solid #f4b8d8;color:#e8699a;border-radius:50px;padding:5px 14px;font-size:13px;font-weight:600}
 
-    /* ボタン */
-    .btn { display: block; width: 100%; padding: 16px; border: none; border-radius: 50px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; letter-spacing: 0.5px; }
-    .btn-primary { background: linear-gradient(135deg, #f472b6, #a78bfa); color: white; box-shadow: 0 4px 16px rgba(244,114,182,0.4); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(244,114,182,0.5); }
-    .btn-line { background: #06C755; color: white; margin-bottom: 10px; font-size: 15px; padding: 14px; }
-    .btn-x { background: #000; color: white; font-size: 15px; padding: 14px; }
-    .btn-retry { background: linear-gradient(135deg, #fbbf24, #f472b6); color: white; margin-bottom: 12px; }
-    .btn-premium {
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      color: white;
-      box-shadow: 0 4px 20px rgba(239,68,68,0.35);
-      font-size: 16px;
-      padding: 18px;
-      border-radius: 16px;
-      margin-top: 4px;
-    }
-    .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(239,68,68,0.45); }
+    .dim-bars{margin-top:8px}
+    .dbar{margin-bottom:14px}
+    .dbar-labels{display:flex;justify-content:space-between;font-size:13px;color:#888;margin-bottom:5px}
+    .dbar-labels strong{color:#e8699a}
+    .dbar-bg{background:#f0e0ec;border-radius:10px;height:12px;overflow:hidden}
+    .dbar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#f472b6,#a78bfa);transition:width .8s ease}
 
-    /* 進捗バー */
-    .progress-wrap { margin-bottom: 20px; }
-    .progress-label { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; }
-    .progress-bar { background: #f0e0ec; border-radius: 10px; height: 8px; overflow: hidden; }
-    .progress-fill { background: linear-gradient(90deg, #f472b6, #a78bfa); height: 100%; border-radius: 10px; transition: width 0.4s ease; }
+    /* PREMIUM */
+    .premium-card{background:linear-gradient(135deg,#fff7ed,#fef3c7);border:2px solid #fbbf24;border-radius:24px;padding:28px 24px;margin-bottom:20px}
+    .prem-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:50px;margin-bottom:12px;letter-spacing:1px}
+    .prem-title{font-size:20px;font-weight:900;color:#92400e;margin-bottom:8px}
+    .prem-sub{font-size:13px;color:#b45309;margin-bottom:18px;line-height:1.6}
+    .prem-preview{position:relative;margin-bottom:18px}
+    .prem-blur{background:#fff;border-radius:12px;padding:14px;filter:blur(4px);user-select:none;pointer-events:none;font-size:13px;color:#555;line-height:1.7}
+    .prem-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.5);border-radius:12px}
+    .prem-overlay .lock{font-size:30px;margin-bottom:4px}
+    .prem-overlay p{font-size:12px;font-weight:700;color:#92400e}
+    .prem-features{list-style:none;margin-bottom:18px}
+    .prem-features li{display:flex;align-items:flex-start;gap:8px;font-size:14px;color:#78350f;padding:7px 0;border-bottom:1px dashed #fde68a;line-height:1.5}
+    .prem-features li:last-child{border-bottom:none}
+    .prem-price{text-align:center;margin-bottom:16px}
+    .price-main{font-size:38px;font-weight:900;color:#ef4444}
+    .price-orig{font-size:14px;color:#bbb;text-decoration:line-through;margin-right:8px}
+    .price-note{font-size:12px;color:#aaa;margin-top:2px}
+    .btn-premium{display:block;width:100%;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:none;border-radius:50px;padding:18px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(239,68,68,.35);transition:all .2s}
+    .btn-premium:hover{transform:translateY(-2px)}
 
-    /* 問題 */
-    .question-num { font-size: 12px; color: #cca0bb; font-weight: 700; letter-spacing: 2px; margin-bottom: 8px; }
-    .question-text { font-size: 18px; font-weight: 700; color: #333; line-height: 1.6; margin-bottom: 24px; }
-    .options { display: flex; flex-direction: column; gap: 12px; }
-    .option-btn { background: white; border: 2.5px solid #f0d0e8; border-radius: 16px; padding: 16px 20px; font-size: 15px; color: #555; cursor: pointer; transition: all 0.2s; text-align: left; line-height: 1.5; }
-    .option-btn:hover { border-color: #f472b6; background: #fdf0f8; transform: translateX(4px); }
-    .option-btn .opt-label { display: inline-block; background: linear-gradient(135deg, #f472b6, #a78bfa); color: white; border-radius: 50%; width: 24px; height: 24px; line-height: 24px; text-align: center; font-size: 12px; font-weight: 700; margin-right: 10px; }
+    /* SHARE */
+    .share-card{background:rgba(255,255,255,.85);border-radius:24px;padding:24px;margin-bottom:20px;box-shadow:0 4px 20px rgba(232,105,154,.1)}
+    .share-title{text-align:center;font-size:14px;color:#aaa;margin-bottom:14px}
+    .btn-line{display:block;width:100%;background:#06C755;color:#fff;border:none;border-radius:50px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px}
+    .btn-x{display:block;width:100%;background:#000;color:#fff;border:none;border-radius:50px;padding:15px;font-size:15px;font-weight:700;cursor:pointer}
 
-    /* 結果 */
-    #result-screen { display: none; }
-    .result-type-badge { text-align: center; margin-bottom: 20px; }
-    .result-emoji { font-size: 72px; display: block; margin-bottom: 8px; }
-    .result-type { display: inline-block; background: linear-gradient(135deg, #f472b6, #a78bfa); color: white; font-size: 36px; font-weight: 900; letter-spacing: 4px; padding: 10px 28px; border-radius: 16px; margin-bottom: 10px; }
-    .result-nickname { font-size: 20px; color: #e8699a; font-weight: 700; margin-top: 8px; }
-    .result-desc { font-size: 15px; line-height: 1.8; color: #555; margin: 16px 0; }
-    .result-traits { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
-    .trait-tag { background: #fdf0f8; border: 1.5px solid #f4b8d8; color: #e8699a; border-radius: 50px; padding: 5px 14px; font-size: 13px; font-weight: 600; }
-    .dimension-bars { margin: 20px 0; }
-    .dim-row { margin-bottom: 12px; }
-    .dim-label { display: flex; justify-content: space-between; font-size: 13px; color: #888; margin-bottom: 4px; }
-    .dim-bar-bg { background: #f0e0ec; border-radius: 10px; height: 10px; overflow: hidden; }
-    .dim-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #f472b6, #a78bfa); }
+    /* RETRY */
+    .retry-card{background:rgba(255,255,255,.85);border-radius:24px;padding:20px 24px;margin-bottom:20px;text-align:center;box-shadow:0 4px 20px rgba(232,105,154,.1)}
+    .btn-retry{display:block;width:100%;background:linear-gradient(135deg,#fbbf24,#f472b6);color:#fff;border:none;border-radius:50px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:8px}
 
-    /* ★ プレミアムカード */
-    .premium-card {
-      background: linear-gradient(135deg, #fff7ed, #fef3c7);
-      border: 2px solid #fbbf24;
-      border-radius: 24px;
-      padding: 28px 24px;
-      margin-bottom: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-    .premium-card::before {
-      content: '';
-      position: absolute;
-      top: -30px; right: -30px;
-      width: 100px; height: 100px;
-      background: rgba(251,191,36,0.15);
-      border-radius: 50%;
-    }
-    .premium-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      color: white;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 50px;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
-    }
-    .premium-title { font-size: 20px; font-weight: 900; color: #92400e; margin-bottom: 8px; }
-    .premium-subtitle { font-size: 13px; color: #b45309; margin-bottom: 20px; line-height: 1.6; }
-    .premium-features { list-style: none; margin-bottom: 20px; }
-    .premium-features li {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 14px;
-      color: #78350f;
-      padding: 6px 0;
-      border-bottom: 1px dashed #fde68a;
-      line-height: 1.5;
-    }
-    .premium-features li:last-child { border-bottom: none; }
-    .premium-features li .check { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-    .premium-price {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    .price-main { font-size: 36px; font-weight: 900; color: #ef4444; }
-    .price-sub { font-size: 13px; color: #aaa; margin-top: 2px; }
-    .price-original { font-size: 14px; color: #bbb; text-decoration: line-through; margin-right: 8px; }
+    .disclaimer{background:#f9f9f9;border-radius:12px;padding:12px 16px;font-size:11px;color:#bbb;line-height:1.7;margin-top:8px}
 
-    /* ぼかし preview */
-    .premium-preview {
-      position: relative;
-      margin-bottom: 16px;
-    }
-    .preview-blur {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      filter: blur(5px);
-      user-select: none;
-      pointer-events: none;
-      font-size: 14px;
-      color: #555;
-      line-height: 1.7;
-    }
-    .preview-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.5);
-      border-radius: 12px;
-    }
-    .preview-overlay .lock { font-size: 32px; margin-bottom: 6px; }
-    .preview-overlay p { font-size: 13px; font-weight: 700; color: #92400e; }
+    .fade-in{animation:fadeIn .4s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-    /* シェア */
-    .share-section { margin-top: 8px; }
-    .share-title { text-align: center; font-size: 14px; color: #aaa; margin-bottom: 12px; }
+    footer{text-align:center;font-size:12px;color:#ccc;margin-top:32px}
 
-    .disclaimer { background: #f9f9f9; border-radius: 12px; padding: 12px 16px; font-size: 11px; color: #bbb; line-height: 1.7; margin-top: 20px; }
-
-    /* ローディング */
-    .loading { display: none; text-align: center; padding: 40px; }
-    .loading .spinner { width: 48px; height: 48px; border: 4px solid #f0d0e8; border-top-color: #f472b6; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .fade-in { animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
-    footer { text-align: center; font-size: 12px; color: #ccc; margin-top: 32px; }
+    /* START BTN */
+    .btn-start{display:block;width:100%;background:linear-gradient(135deg,#f472b6,#a78bfa);color:#fff;border:none;border-radius:50px;padding:18px;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(244,114,182,.4);transition:all .2s;letter-spacing:.5px;margin-top:8px}
+    .btn-start:hover{transform:translateY(-2px)}
   </style>
 </head>
 <body>
-<div class="container">
+<div id="sticky-prog" class="sticky-progress">
+  <div class="prog-row"><span id="prog-label">0 / 60問回答済み</span><span id="prog-pct">0%</span></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
 
-  <div class="header">
-    <span class="emoji-big">🌸</span>
+<div class="wrap">
+  <header class="site-header">
+    <span class="logo">🌸</span>
     <h1>MBTI 性格診断</h1>
-    <p>あなたはどの16タイプ？無料で診断しよう！</p>
+    <p>60問・7段階評価・本格派テスト</p>
+  </header>
+
+  <!-- 3STEPS -->
+  <div class="steps fade-in">
+    <div class="step"><span class="s-num">STEP 1</span><span class="s-icon">📝</span><div class="s-title">テストに<br>答える</div></div>
+    <div class="step"><span class="s-num">STEP 2</span><span class="s-icon">🔍</span><div class="s-title">結果を<br>チェック</div></div>
+    <div class="step"><span class="s-num">STEP 3</span><span class="s-icon">🚀</span><div class="s-title">可能性を<br>引き出す</div></div>
   </div>
 
-  <!-- スタート -->
-  <div id="start-screen" class="card fade-in">
-    <p class="subtitle">20問の質問に答えるだけで、<br>あなたの性格タイプがわかります✨<br>直感で答えてね！</p>
-    <div class="info-grid">
-      <div class="info-item"><div class="icon">📝</div><p>全20問</p></div>
-      <div class="info-item"><div class="icon">⏱️</div><p>約3〜5分</p></div>
-      <div class="info-item"><div class="icon">🆓</div><p>完全無料</p></div>
-      <div class="info-item"><div class="icon">📲</div><p>シェアできる</p></div>
-    </div>
-    <button class="btn btn-primary" onclick="startQuiz()">診断スタート！ 🚀</button>
+  <!-- INTRO -->
+  <div id="intro-card" class="intro-card fade-in">
+    <p>各文章を読んで、<strong>どれくらい自分に当てはまるか</strong>を7段階で選んでください。直感で答えるのがベスト✨<br><br>全60問・所要時間：約5〜8分</p>
+    <button class="btn-start" onclick="startQuiz()">診断スタート！ 🚀</button>
   </div>
 
-  <!-- 問題 -->
-  <div id="quiz-screen" style="display:none">
-    <div class="progress-wrap">
-      <div class="progress-label">
-        <span id="q-count">質問 1 / 20</span>
-        <span id="q-pct">0%</span>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-    </div>
-    <div class="card fade-in" id="question-card">
-      <div class="question-num" id="q-num">Q1</div>
-      <div class="question-text" id="q-text"></div>
-      <div class="options" id="q-options"></div>
-    </div>
+  <!-- QUIZ -->
+  <div id="quiz-form"></div>
+  <div class="submit-wrap" id="submit-wrap">
+    <button class="btn-submit" onclick="calcResult()">結果を見る ✨</button>
   </div>
 
-  <!-- ローディング -->
-  <div class="loading" id="loading">
+  <!-- LOADING -->
+  <div id="loading">
     <div class="spinner"></div>
-    <p style="color:#e8699a;font-weight:700">診断中...✨</p>
+    <p style="color:#e8699a;font-weight:700;font-size:16px">診断中...✨</p>
   </div>
 
-  <!-- 結果 -->
+  <!-- RESULT -->
   <div id="result-screen">
-    <!-- 無料結果 -->
-    <div class="card fade-in">
-      <div class="result-type-badge">
-        <span class="result-emoji" id="res-emoji"></span>
-        <div class="result-type" id="res-type"></div>
-        <div class="result-nickname" id="res-nickname"></div>
-      </div>
-      <div class="result-desc" id="res-desc"></div>
-      <div class="result-traits" id="res-traits"></div>
-      <div class="dimension-bars" id="res-bars"></div>
+    <div class="result-hero fade-in">
+      <span class="result-emoji" id="res-emoji"></span>
+      <div class="type-badge" id="res-type"></div>
+      <div class="type-nick" id="res-nick"></div>
+      <div class="type-desc" id="res-desc"></div>
+      <div class="traits" id="res-traits"></div>
+      <div class="dim-bars" id="res-bars"></div>
     </div>
 
-    <!-- ★ プレミアム詳細分析カード -->
+    <!-- PREMIUM -->
     <div class="premium-card fade-in">
-      <div class="premium-badge">👑 PREMIUM</div>
-      <div class="premium-title">あなただけの詳細分析レポート</div>
-      <div class="premium-subtitle">無料診断の5倍以上の情報量！あなたの性格をもっと深く知ろう✨</div>
-
-      <!-- ぼかしプレビュー -->
-      <div class="premium-preview">
-        <div class="preview-blur" id="preview-text">
-          あなたのタイプは職場での強みが特にXXXにあります。対人関係においては、XXXな傾向があり、恋愛ではXXXなパートナーと相性が良いです。ストレスを感じたときはXXXな対処法が効果的です。あなたの成長ポイントはXXXです...
-        </div>
-        <div class="preview-overlay">
-          <div class="lock">🔒</div>
-          <p>購入後に全文が表示されます</p>
-        </div>
+      <div class="prem-badge">👑 PREMIUM</div>
+      <div class="prem-title">あなただけの詳細分析レポート</div>
+      <div class="prem-sub">無料診断の5倍以上の情報量！仕事・恋愛・ストレス対策まで丸ごとわかる✨</div>
+      <div class="prem-preview">
+        <div class="prem-blur" id="prem-preview-text">あなたのタイプは職場での強みが特にXXXにあります。対人関係においては、XXXな傾向があり、恋愛ではXXXなパートナーと相性が良いです。ストレスを感じたときはXXXな対処法が効果的です...</div>
+        <div class="prem-overlay"><div class="lock">🔒</div><p>購入後に全文が表示されます</p></div>
       </div>
-
-      <ul class="premium-features">
-        <li><span class="check">💼</span><span><strong>仕事・職場での強み</strong> — あなたが輝くシーンと苦手な環境</span></li>
-        <li><span class="check">💕</span><span><strong>恋愛・相性タイプ</strong> — 相性のいいMBTIと関係パターン</span></li>
-        <li><span class="check">😤</span><span><strong>ストレスのサインと対処法</strong> — 崩れやすいポイントと回復法</span></li>
-        <li><span class="check">🌱</span><span><strong>成長ポイント</strong> — 弱みを強みに変えるアドバイス</span></li>
-        <li><span class="check">🤝</span><span><strong>相性の良い・悪いタイプ一覧</strong> — 16タイプとの関係性まとめ</span></li>
-        <li><span class="check">🎯</span><span><strong>向いている職業・趣味リスト</strong> — タイプ別おすすめライフスタイル</span></li>
+      <ul class="prem-features">
+        <li>💼 <span><strong>仕事・職場での強み</strong> — 輝くシーンと苦手な環境</span></li>
+        <li>💕 <span><strong>恋愛・相性タイプ</strong> — 相性のいいMBTIと関係パターン</span></li>
+        <li>😤 <span><strong>ストレスのサインと対処法</strong> — 崩れやすいポイントと回復法</span></li>
+        <li>🌱 <span><strong>成長ポイント</strong> — 弱みを強みに変えるアドバイス</span></li>
+        <li>🤝 <span><strong>相性の良い・悪いタイプ一覧</strong> — 16タイプとの関係性まとめ</span></li>
+        <li>🎯 <span><strong>向いている職業・趣味リスト</strong> — タイプ別おすすめライフスタイル</span></li>
       </ul>
-
-      <div class="premium-price">
-        <div>
-          <span class="price-original">¥1,500</span>
-          <span class="price-main">¥500</span>
-        </div>
-        <div class="price-sub">期間限定価格 · 買い切り · 即時閲覧</div>
+      <div class="prem-price">
+        <div><span class="price-orig">¥1,500</span><span class="price-main">¥500</span></div>
+        <div class="price-note">期間限定価格 · 買い切り · 即時閲覧</div>
       </div>
-
-      <button class="btn btn-premium" onclick="goPremium()">
-        🔓 今すぐ詳細レポートを見る →
-      </button>
+      <button class="btn-premium" onclick="goPremium()">🔓 今すぐ詳細レポートを見る →</button>
       <p style="text-align:center;font-size:11px;color:#bbb;margin-top:10px">クレジットカード・コンビニ払い対応</p>
     </div>
 
-    <!-- シェア -->
-    <div class="card fade-in">
+    <!-- SHARE -->
+    <div class="share-card fade-in">
       <div class="share-title">🎉 結果をシェアしよう！</div>
-      <button class="btn btn-line" onclick="shareToLine()">📲 LINEでシェア</button>
-      <button class="btn btn-x" onclick="shareToX()">𝕏 Xでシェア</button>
+      <button class="btn-line" onclick="shareToLine()">📲 LINEでシェア</button>
+      <button class="btn-x" onclick="shareToX()">𝕏 Xでシェア</button>
     </div>
 
-    <div class="card fade-in">
-      <button class="btn btn-retry" onclick="retryQuiz()">🔄 もう一度診断する</button>
-      <p style="text-align:center;font-size:12px;color:#ccc">友達にも教えてあげよう🌸</p>
+    <div class="retry-card fade-in">
+      <button class="btn-retry" onclick="retryQuiz()">🔄 もう一度診断する</button>
+      <p style="font-size:12px;color:#ccc">友達にも教えてあげよう🌸</p>
     </div>
 
-    <div class="disclaimer">
-      ⚠️ このテストは娯楽目的のMBTI風診断です。公式のMBTI®テストとは異なります。結果は科学的な根拠を保証するものではありません。詳細レポートも参考情報としてご利用ください。
-    </div>
+    <div class="disclaimer">⚠️ このテストは娯楽目的のMBTI風診断です。公式のMBTI®テストとは異なります。結果は科学的根拠を保証するものではありません。</div>
   </div>
 
   <footer>© 2025 MBTI診断 | 娯楽目的の参考コンテンツです</footer>
@@ -314,150 +230,192 @@
 
 <script>
 // ============================================================
-// 問題データ（20問、4次元各5問）
-// A=E/S/T/J +1, B=I/N/F/P -1
+// 問題データ
+// reversed: true → スコアを反転
+// dim: 0=E/I, 1=S/N, 2=T/F, 3=J/P
 // ============================================================
 const questions = [
-  { dim: 0, text: "週末の過ごし方として、どちらが近い？", a: "友達とワイワイ出かけたい🎉", b: "家でのんびり過ごしたい🏠" },
-  { dim: 0, text: "初対面の人と話すとき、あなたは？", a: "自分からどんどん話しかける😊", b: "相手が話しかけてきてから話す🤔" },
-  { dim: 0, text: "パーティーのあと、あなたは？", a: "もっと盛り上がりたい気持ち！", b: "疲れてひとりになりたい気持ち…" },
-  { dim: 0, text: "グループ作業と一人作業、どちらが好き？", a: "みんなとワイワイが楽しい！", b: "ひとりで集中するのが得意" },
-  { dim: 0, text: "新しい環境に入ったとき？", a: "すぐに打ち解けられる方だ", b: "馴染むのに少し時間がかかる" },
-  { dim: 1, text: "情報を得るとき、信頼できるのは？", a: "実際の経験や事実データ📊", b: "直感やインスピレーション💡" },
-  { dim: 1, text: "未来について考えるとき、どちら寄り？", a: "現実的・具体的な計画を立てる", b: "夢や可能性を思い描く" },
-  { dim: 1, text: "説明するとき、あなたのスタイルは？", a: "細かく具体的に説明する", b: "全体像やイメージで話す" },
-  { dim: 1, text: "興味があることは？", a: "実用的で今すぐ役に立つこと", b: "理論的・抽象的な話が好き" },
-  { dim: 1, text: "問題を解決するとき？", a: "過去の経験や実績を参考にする", b: "新しいアプローチを考える" },
-  { dim: 2, text: "友達が悩みを相談してきたとき？", a: "論理的なアドバイスをする🧠", b: "まずとにかく共感する💗" },
-  { dim: 2, text: "決断するときの基準は？", a: "事実と論理を重視する", b: "自分や周りの感情を重視する" },
-  { dim: 2, text: "議論になったとき、あなたは？", a: "正しいことを言いたい（たとえ相手が傷ついても）", b: "相手の気持ちを優先して丸く収めたい" },
-  { dim: 2, text: "ほめ言葉として嬉しいのは？", a: "「頭がいいね、論理的だね」", b: "「優しいね、思いやりがあるね」" },
-  { dim: 2, text: "批判されたとき、どう受け取る？", a: "冷静に内容を分析する", b: "感情的にショックを受けやすい" },
-  { dim: 3, text: "旅行の計画を立てるとき？", a: "事前にしっかり計画を立てる📋", b: "行き当たりばったりが楽しい🎲" },
-  { dim: 3, text: "締め切りや期限について？", a: "余裕をもって早めに終わらせたい", b: "ギリギリになってから本気を出す" },
-  { dim: 3, text: "部屋や机の状態は？", a: "整理整頓されている方だ", b: "ちょっと散らかっていることが多い" },
-  { dim: 3, text: "予定外のことが起きたとき？", a: "困る（計画通りにしたい！）", b: "意外と楽しめる（臨機応変派）" },
-  { dim: 3, text: "物事を決めるとき、どちらが多い？", a: "すぐ決めてスッキリしたい", b: "もう少し情報を集めてから決めたい" },
+  // E/I
+  {dim:0,text:"人の集まりの場では、会話の中心になりやすい"},
+  {dim:0,text:"新しい人と話すことにエネルギーを感じる"},
+  {dim:0,text:"一人で過ごすよりも、人と一緒にいる方が楽しい"},
+  {dim:0,text:"初対面の人ともすぐに打ち解けられる"},
+  {dim:0,text:"パーティーや集まりの後、もっと続けたいと思うことが多い"},
+  {dim:0,text:"自分の考えは、話しながらまとめていくことが多い"},
+  {dim:0,text:"友人が多い方で、広い人間関係を持っている"},
+  {dim:0,text:"静かな場所よりも、賑やかな環境の方が集中できることがある"},
+  {dim:0,text:"グループ作業よりも一人作業の方が落ち着く",reversed:true},
+  {dim:0,text:"人と長時間一緒にいると、疲れを感じることがある",reversed:true},
+  {dim:0,text:"知らない人に話しかけることに抵抗がない"},
+  {dim:0,text:"電話よりもメッセージを好む",reversed:true},
+  {dim:0,text:"自分の気持ちや考えをオープンに話すことが多い"},
+  {dim:0,text:"週末は外出して人と会う予定を入れたい"},
+  {dim:0,text:"会話が途切れると、自分から話題を作ろうとする"},
+  // S/N
+  {dim:1,text:"細かいデータや事実に基づいて判断することを好む"},
+  {dim:1,text:"実際に経験したことから学ぶのが得意だ"},
+  {dim:1,text:"現実的・具体的な解決策を優先する"},
+  {dim:1,text:"手順通りに進めることで安心感を得る"},
+  {dim:1,text:"抽象的なアイデアよりも、実用的な情報の方が役に立つ"},
+  {dim:1,text:"大きなビジョンよりも、今できることに集中する"},
+  {dim:1,text:"直感よりも、証拠や事実を信頼する"},
+  {dim:1,text:"仕事や作業では、実績のある方法を使うことが多い"},
+  {dim:1,text:"突飛なアイデアよりも、現実的なプランを好む"},
+  {dim:1,text:"「なぜそうなのか」より「どうすれば良いか」を考える"},
+  {dim:1,text:"将来の可能性を考えることに多くの時間を使う",reversed:true},
+  {dim:1,text:"パターンやつながりを見つけることが得意だ",reversed:true},
+  {dim:1,text:"革新的なアイデアを考えることにワクワクする",reversed:true},
+  {dim:1,text:"理論や概念について深く考えることが好きだ",reversed:true},
+  {dim:1,text:"日常の中に隠れた意味やシンボルを見つけることが楽しい",reversed:true},
+  // T/F
+  {dim:2,text:"感情よりも論理的な理由に基づいて決断する"},
+  {dim:2,text:"友人の悩みを聞くとき、まず解決策を提案したい"},
+  {dim:2,text:"批判を受けても、感情的にならずに内容を受け止められる"},
+  {dim:2,text:"物事を公平に扱うことが、思いやりよりも重要だと思う"},
+  {dim:2,text:"人の気持ちよりも、正しいことを言う方が大切だと思う"},
+  {dim:2,text:"仕事では、成果と効率を個人の感情よりも優先する"},
+  {dim:2,text:"討論や議論を楽しめる"},
+  {dim:2,text:"感情に流されずに冷静な判断ができる"},
+  {dim:2,text:"他者の批判に傷つきやすい",reversed:true},
+  {dim:2,text:"周りの人の気持ちに敏感で、影響を受けやすい",reversed:true},
+  {dim:2,text:"人の感情やニーズに気づくのが得意だ",reversed:true},
+  {dim:2,text:"誰かが傷ついていると、自分も辛くなる",reversed:true},
+  {dim:2,text:"意見の不一致よりも、調和を保つことを優先する",reversed:true},
+  {dim:2,text:"褒め言葉や感謝の言葉が大きなモチベーションになる",reversed:true},
+  {dim:2,text:"人の話を聞くとき、まず感情的なサポートを提供したい",reversed:true},
+  // J/P
+  {dim:3,text:"計画を立てて、それに沿って行動することが好きだ"},
+  {dim:3,text:"締め切りより前に仕事を終わらせることが多い"},
+  {dim:3,text:"部屋や机は整理整頓されている方だ"},
+  {dim:3,text:"旅行前には詳細なスケジュールを作る"},
+  {dim:3,text:"決断を下したら、迷わず実行に移すことが多い"},
+  {dim:3,text:"何かを始める前に、十分な計画を立てたい"},
+  {dim:3,text:"同時に複数のことをするよりも、一つずつ終わらせる方が好きだ"},
+  {dim:3,text:"毎日のルーティンを大切にしている"},
+  {dim:3,text:"予定が急に変わると、ストレスを感じる"},
+  {dim:3,text:"物事は白黒はっきりさせたい"},
+  {dim:3,text:"最終決定を先延ばしにして、より多くの選択肢を持っていたい",reversed:true},
+  {dim:3,text:"締め切りギリギリになって、やる気が出ることが多い",reversed:true},
+  {dim:3,text:"柔軟性を保ちながら、状況に応じて対応することが好きだ",reversed:true},
+  {dim:3,text:"予定外のことが起きると、むしろ楽しめる",reversed:true},
+  {dim:3,text:"計画よりも流れに任せることが多い",reversed:true},
 ];
 
-// ============================================================
-// 無料結果データ
-// ============================================================
+const dimInfo = [
+  {icon:"🌐", name:"社交・コミュニケーション", left:"E（外向型）", right:"I（内向型）"},
+  {icon:"💡", name:"思考・情報処理", left:"S（感覚型）", right:"N（直感型）"},
+  {icon:"❤️", name:"意思決定", left:"T（思考型）", right:"F（感情型）"},
+  {icon:"🗂️", name:"生活スタイル", left:"J（判断型）", right:"P（知覚型）"},
+];
+
 const results = {
-  INTJ: { emoji:"🔭", nickname:"戦略家", desc:"論理的で独立心が強く、長期的なビジョンを持つ戦略家タイプ。複雑な問題をシステム的に考えるのが得意。高い基準を持ち、目標に向かって着実に進みます。一見クールに見えるけれど、深いところでは情熱家✨", traits:["戦略的思考","独立心強い","完璧主義","長期ビジョン"] },
-  INTP: { emoji:"🧩", nickname:"論理学者", desc:"知的好奇心旺盛で、世界のしくみを理解したいタイプ。アイデアを深く掘り下げるのが大好き。少し内向的だけど、好きなテーマになると止まらないくらいおしゃべりになります🧠", traits:["分析的","創造的","客観的","理論好き"] },
-  ENTJ: { emoji:"👑", nickname:"指揮官", desc:"生まれながらのリーダー！目標達成のためなら障壁も乗り越えます。効率と成果を重視し、組織やプロジェクトをまとめる力があります。頼もしさ抜群の存在💪", traits:["リーダーシップ","決断力","戦略家","野心的"] },
-  ENTP: { emoji:"💡", nickname:"討論者", desc:"アイデアマンで、常識に挑戦するのが好き！議論を楽しみ、あらゆる可能性を探ります。スピード感と機転の利かせ方が魅力。飽きっぽいけど、その分いつも新しい面白いことを見つけてくる🎯", traits:["機転が利く","議論好き","革新的","エネルギッシュ"] },
-  INFJ: { emoji:"🌟", nickname:"提唱者", desc:"深い洞察力と強い共感力を持つ稀少なタイプ。人の感情を読み取るのが得意で、理想の未来に向けて静かに情熱を燃やします。繊細だけど芯の強さを持つ不思議な存在✨", traits:["共感力高い","洞察力","理想主義","クリエイティブ"] },
-  INFP: { emoji:"🌈", nickname:"仲介者", desc:"夢見がちな理想主義者。自分の価値観に正直に生きることを大切にします。創造性豊かで、感情表現が豊か。見た目は穏やかだけど、大切にしているものへの情熱はとても強い🎨", traits:["感受性豊か","創造的","誠実","理想主義"] },
-  ENFJ: { emoji:"🌺", nickname:"主人公", desc:"カリスマ的な存在感で周りを引っ張るタイプ。人の可能性を信じて、成長をサポートするのが得意。自然とリーダーになりがちで、みんなに慕われます💖", traits:["カリスマ","共感力","利他的","コミュニケーション上手"] },
-  ENFP: { emoji:"🦋", nickname:"広報運動家", desc:"自由で情熱的な探求者！新しいアイデアと人への興味が尽きません。感染力のある明るさでみんなを元気にします。ちょっとスパークする感じがたまらない魅力🌈", traits:["熱狂的","創造的","社交的","自由奔放"] },
-  ISTJ: { emoji:"📚", nickname:"管理者", desc:"責任感が強く、約束を守ることを大切にする信頼の置けるタイプ。実直で丁寧な仕事ぶりが評価されます。伝統と秩序を重んじる、縁の下の力持ち💪", traits:["責任感強い","几帳面","誠実","忍耐力"] },
-  ISFJ: { emoji:"🌷", nickname:"擁護者", desc:"思いやりにあふれる守護者タイプ。大切な人を支えることに喜びを感じます。細やかな気配りで周りをほっとさせる存在💗", traits:["思いやり","気配り上手","忠実","実直"] },
-  ESTJ: { emoji:"⚡", nickname:"幹部", desc:"秩序と組織をまとめる生まれながらの管理者。物事を効率的に進め、ルールとコミットメントを大切にします。頼れる存在でもあります🔥", traits:["組織力","リーダーシップ","実直","効率重視"] },
-  ESFJ: { emoji:"🎀", nickname:"領事官", desc:"社交的で思いやり溢れるタイプ。周りの人が幸せかどうかを常に気にかけます。チームの雰囲気をよくするムードメーカー！💝", traits:["社交的","思いやり","チームワーク","協調性"] },
-  ISTP: { emoji:"🔧", nickname:"巨匠", desc:"クールで観察眼鋭い問題解決者。手を動かして物事を理解するのが得意で、実用的なスキルに長けています。独立心が強く、いざというときに頼りになる存在🛠️", traits:["観察眼","実用的","冷静","独立心"] },
-  ISFP: { emoji:"🎨", nickname:"冒険者", desc:"穏やかで感受性豊かなアーティストタイプ。美しいものや自分の価値観に従って生きることを大切にします🌸", traits:["感受性","芸術的","柔軟","自由を愛する"] },
-  ESTP: { emoji:"🎯", nickname:"起業家", desc:"エネルギッシュで行動力抜群！今この瞬間を楽しむことが大好き。リスクを恐れず、スリルを求めます。瞬発力で状況を打開する実行力派🚀", traits:["行動力","エネルギッシュ","大胆","観察眼"] },
-  ESFP: { emoji:"🎉", nickname:"エンターテイナー", desc:"人生を全力で楽しむエンタメ系タイプ！いるだけで場が明るくなる存在。みんなを笑顔にするのが自然体の大スター✨", traits:["明るい","社交的","即興力","楽しむ天才"] },
+  INTJ:{emoji:"🔭",nick:"戦略家",desc:"論理的で独立心が強く、長期的なビジョンを持つ戦略家タイプ。複雑な問題をシステム的に考えるのが得意で、高い基準を持ちながら目標に向かって着実に進みます。一見クールに見えるけれど、深いところでは熱い情熱を秘めています✨",traits:["戦略的思考","独立心強い","完璧主義","長期ビジョン"]},
+  INTP:{emoji:"🧩",nick:"論理学者",desc:"知的好奇心旺盛で、世界のしくみを理解したいタイプ。アイデアを深く掘り下げるのが大好き。少し内向的だけど、好きなテーマになると止まらないくらいおしゃべりになります🧠",traits:["分析的","創造的","客観的","理論好き"]},
+  ENTJ:{emoji:"👑",nick:"指揮官",desc:"生まれながらのリーダー！目標達成のためなら障壁も乗り越えます。効率と成果を重視し、組織やプロジェクトをまとめる力があります。頼もしさ抜群の存在です💪",traits:["リーダーシップ","決断力","戦略家","野心的"]},
+  ENTP:{emoji:"💡",nick:"討論者",desc:"アイデアマンで、常識に挑戦するのが好き！議論を楽しみ、あらゆる可能性を探ります。スピード感と機転の利かせ方が魅力。飽きっぽいけど、その分いつも新しい面白いことを見つけてくる🎯",traits:["機転が利く","議論好き","革新的","エネルギッシュ"]},
+  INFJ:{emoji:"🌟",nick:"提唱者",desc:"深い洞察力と強い共感力を持つ稀少なタイプ。人の感情を読み取るのが得意で、理想の未来に向けて静かに情熱を燃やします。繊細だけど芯の強さを持つ不思議な存在✨",traits:["共感力高い","洞察力","理想主義","クリエイティブ"]},
+  INFP:{emoji:"🌈",nick:"仲介者",desc:"夢見がちな理想主義者。自分の価値観に正直に生きることを大切にします。創造性豊かで感情表現が豊か。見た目は穏やかだけど、大切にしているものへの情熱はとても強い🎨",traits:["感受性豊か","創造的","誠実","理想主義"]},
+  ENFJ:{emoji:"🌺",nick:"主人公",desc:"カリスマ的な存在感で周りを引っ張るタイプ。人の可能性を信じて成長をサポートするのが得意。自然とリーダーになりがちで、みんなに慕われます💖",traits:["カリスマ","共感力","利他的","コミュニケーション上手"]},
+  ENFP:{emoji:"🦋",nick:"広報運動家",desc:"自由で情熱的な探求者！新しいアイデアと人への興味が尽きません。感染力のある明るさでみんなを元気にします。いつも何かワクワクすることを探している🌈",traits:["熱狂的","創造的","社交的","自由奔放"]},
+  ISTJ:{emoji:"📚",nick:"管理者",desc:"責任感が強く、約束を守ることを大切にする信頼の置けるタイプ。実直で丁寧な仕事ぶりが評価されます。伝統と秩序を重んじる、縁の下の力持ち💪",traits:["責任感強い","几帳面","誠実","忍耐力"]},
+  ISFJ:{emoji:"🌷",nick:"擁護者",desc:"思いやりにあふれる守護者タイプ。大切な人を支えることに喜びを感じます。細やかな気配りで周りをほっとさせる存在💗",traits:["思いやり","気配り上手","忠実","実直"]},
+  ESTJ:{emoji:"⚡",nick:"幹部",desc:"秩序と組織をまとめる生まれながらの管理者。物事を効率的に進め、ルールとコミットメントを大切にします。頼れるムードメーカーでもあります🔥",traits:["組織力","リーダーシップ","実直","効率重視"]},
+  ESFJ:{emoji:"🎀",nick:"領事官",desc:"社交的で思いやり溢れるタイプ。周りの人が幸せかどうかを常に気にかけます。チームの雰囲気をよくするムードメーカー！💝",traits:["社交的","思いやり","チームワーク","協調性"]},
+  ISTP:{emoji:"🔧",nick:"巨匠",desc:"クールで観察眼鋭い問題解決者。手を動かして物事を理解するのが得意で、実用的なスキルに長けています。独立心が強く、いざというときに頼りになる存在🛠️",traits:["観察眼","実用的","冷静","独立心"]},
+  ISFP:{emoji:"🎨",nick:"冒険者",desc:"穏やかで感受性豊かなアーティストタイプ。美しいものや自分の価値観に従って生きることを大切にします。内向的に見えるけど、ワクワクする体験は大歓迎🌸",traits:["感受性","芸術的","柔軟","自由を愛する"]},
+  ESTP:{emoji:"🎯",nick:"起業家",desc:"エネルギッシュで行動力抜群！今この瞬間を楽しむことが大好き。リスクを恐れず、瞬発力で状況を打開する実行力派🚀",traits:["行動力","エネルギッシュ","大胆","観察眼"]},
+  ESFP:{emoji:"🎉",nick:"エンターテイナー",desc:"人生を全力で楽しむエンタメ系タイプ！いるだけで場が明るくなる存在。みんなを笑顔にするのが自然体の大スター✨",traits:["明るい","社交的","即興力","楽しむ天才"]},
 };
 
-// ============================================================
-// プレミアム詳細コンテンツ（購入後に表示）
-// ※ 実際はStripe購入後の専用ページに移動させる想定
-// ============================================================
-const premiumContent = {
-  INTJ: {
-    work: "職場では長期プロジェクトのリーダーや戦略立案に最も輝きます。細かい指示より大きな裁量を与えられる環境が向いています。マイクロマネジメントや感情的な職場環境は苦手で、ストレスの原因になりやすいです。",
-    love: "恋愛では深く信頼できる相手としか本気になれません。相性が良いのはENFPやINFPなど、あなたの論理を感情で補完してくれるタイプ。言葉より行動で愛情を示す傾向があります。",
-    stress: "ストレスがたまると感情が爆発したり、過度に孤立したりします。サインは「何もかもどうでもいい」感覚。回復には一人の思考時間と、信頼できる人との深い会話が効果的です。",
-    growth: "人の感情を軽視しがちな点を意識して改善すると、リーダーとしての影響力が大幅に上がります。完璧主義を手放す練習も成長の鍵です。",
-    compatible: "最高：ENFP / 良い：INFP, ENTP / 難しい：ESFP, ISFP",
-    careers: "戦略コンサルタント、システムアーキテクト、研究者、起業家、弁護士"
-  },
-  INFP: {
-    work: "クリエイティブな仕事や意義を感じられる仕事に最も輝きます。厳しいルールや数字だけを追う環境は長続きしません。自分のペースで深く考えられる環境が理想です。",
-    love: "恋愛では理想が高く、魂レベルで繋がれる相手を求めます。相性が良いのはENFJやINFJ。表面的な関係より深い絆を大切にし、パートナーの成長を心から応援します。",
-    stress: "ストレスがたまると自分の世界に完全に引きこもります。サインは「誰にも会いたくない」感覚の長期化。回復には創作活動、自然の中での散歩、好きな音楽が効果的です。",
-    growth: "現実逃避の傾向を意識して、小さくても行動に移す習慣をつけると人生が大きく変わります。自分の気持ちを言葉にする勇気も大切です。",
-    compatible: "最高：ENFJ / 良い：INFJ, ENTJ / 難しい：ESTJ, ESTP",
-    careers: "作家、カウンセラー、デザイナー、教師、社会活動家、心理士"
-  },
-  // 他のタイプも同様の構造（簡略版）
-};
+const PAYMENT_LINKS = { default:'https://buy.stripe.com/YOUR_PAYMENT_LINK' };
 
-// デフォルトプレミアムコンテンツ（全タイプ共通テンプレート）
-function getPremiumContent(type) {
-  return premiumContent[type] || {
-    work: `${type}タイプは独自の強みを職場で発揮します。詳細は購入後のレポートでご確認ください。`,
-    love: `${type}タイプの恋愛パターンと相性について詳しく解説します。`,
-    stress: `${type}タイプのストレスサインと効果的な回復方法を詳しく解説します。`,
-    growth: `${type}タイプが成長するための具体的なアドバイスをお届けします。`,
-    compatible: "購入後に全16タイプとの相性を確認できます",
-    careers: "購入後にあなたに向いている職業リストを確認できます"
-  };
-}
-
-// ============================================================
-// アプリのロジック
-// ============================================================
-let scores = [0, 0, 0, 0];
-let current = 0;
+let scores = [0,0,0,0];
+let answered = 0;
 let currentType = '';
 
-// Stripe Payment Link（後で差し替える）
-// 各タイプ別のリンクを設定するか、共通リンク1本でもOK
-const PAYMENT_LINKS = {
-  default: 'https://buy.stripe.com/YOUR_PAYMENT_LINK', // ← ここに後でStripeのURLを入れる
-};
-
 function startQuiz() {
-  document.getElementById('start-screen').style.display = 'none';
-  document.getElementById('quiz-screen').style.display = 'block';
-  scores = [0, 0, 0, 0];
-  current = 0;
-  showQuestion();
+  document.getElementById('intro-card').style.display = 'none';
+  document.getElementById('sticky-prog').style.display = 'block';
+  buildQuiz();
+  document.getElementById('quiz-form').style.display = 'block';
 }
 
-function showQuestion() {
-  const q = questions[current];
-  document.getElementById('q-num').textContent = `Q${current + 1}`;
-  document.getElementById('q-text').textContent = q.text;
-  document.getElementById('q-count').textContent = `質問 ${current + 1} / ${questions.length}`;
-  const pct = Math.round((current / questions.length) * 100);
-  document.getElementById('q-pct').textContent = `${pct}%`;
-  document.getElementById('progress-fill').style.width = `${pct}%`;
+function buildQuiz() {
+  const form = document.getElementById('quiz-form');
+  // Group by dim
+  const dims = [[],[],[],[]];
+  questions.forEach((q,i) => dims[q.dim].push({...q, idx:i}));
 
-  const opts = document.getElementById('q-options');
-  opts.innerHTML = `
-    <button class="option-btn" onclick="answer(1)"><span class="opt-label">A</span>${q.a}</button>
-    <button class="option-btn" onclick="answer(-1)"><span class="opt-label">B</span>${q.b}</button>
-  `;
-
-  const card = document.getElementById('question-card');
-  card.classList.remove('fade-in');
-  void card.offsetWidth;
-  card.classList.add('fade-in');
+  let html = '';
+  dims.forEach((qs, d) => {
+    const info = dimInfo[d];
+    html += `<div class="dim-section">
+      <div class="dim-header">
+        <span class="dim-icon">${info.icon}</span>
+        <h2>${info.name}</h2>
+        <span>${qs.length}問</span>
+      </div>`;
+    qs.forEach((q,qi) => {
+      const vals = [3,2,1,0,-1,-2,-3];
+      const labels = ['強く同意','同意','やや同意','中立','やや不同意','不同意','強く不同意'];
+      let btns = vals.map((v,vi) => `
+        <input type="radio" name="q${q.idx}" id="q${q.idx}_${vi}" value="${v}" onchange="onAnswer(${q.idx})">
+        <label for="q${q.idx}_${vi}" title="${labels[vi]}">${v>0?'+'+v:v}</label>
+      `).join('');
+      html += `<div class="q-card" id="qcard${q.idx}">
+        <div class="q-num">Q${q.idx+1}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="scale-wrap">
+          <div class="scale-labels"><span>👍 強く同意</span><span>中立</span><span>強く不同意 👎</span></div>
+          <div class="scale-btns">${btns}</div>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  form.innerHTML = html;
 }
 
-function answer(val) {
-  scores[questions[current].dim] += val;
-  current++;
-  if (current >= questions.length) {
-    showLoading();
-  } else {
-    showQuestion();
+function onAnswer(idx) {
+  const prev = document.getElementById('qcard'+idx).dataset.answered;
+  if (!prev) {
+    document.getElementById('qcard'+idx).dataset.answered = '1';
+    answered++;
+    updateProgress();
+    if (answered >= questions.length) {
+      document.getElementById('submit-wrap').style.display = 'block';
+      document.getElementById('submit-wrap').scrollIntoView({behavior:'smooth'});
+    }
   }
 }
 
-function showLoading() {
-  document.getElementById('quiz-screen').style.display = 'none';
+function updateProgress() {
+  const pct = Math.round((answered / questions.length) * 100);
+  document.getElementById('prog-label').textContent = `${answered} / ${questions.length}問回答済み`;
+  document.getElementById('prog-pct').textContent = `${pct}%`;
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+function calcResult() {
+  scores = [0,0,0,0];
+  questions.forEach((q,i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    if (sel) {
+      let v = parseInt(sel.value);
+      if (q.reversed) v = -v;
+      scores[q.dim] += v;
+    }
+  });
+
+  document.getElementById('quiz-form').style.display = 'none';
+  document.getElementById('submit-wrap').style.display = 'none';
+  document.getElementById('sticky-prog').style.display = 'none';
   document.getElementById('loading').style.display = 'block';
-  setTimeout(showResult, 1400);
+  setTimeout(showResult, 1500);
 }
 
 function getType() {
-  return (scores[0]>=0?'E':'I') + (scores[1]>=0?'S':'N') + (scores[2]>=0?'T':'F') + (scores[3]>=0?'J':'P');
+  return (scores[0]>0?'E':'I')+(scores[1]>0?'S':'N')+(scores[2]>0?'T':'F')+(scores[3]>0?'J':'P');
 }
 
 function showResult() {
@@ -469,55 +427,53 @@ function showResult() {
 
   document.getElementById('res-emoji').textContent = r.emoji;
   document.getElementById('res-type').textContent = currentType;
-  document.getElementById('res-nickname').textContent = `「${r.nickname}」タイプ`;
+  document.getElementById('res-nick').textContent = `「${r.nick}」タイプ`;
   document.getElementById('res-desc').textContent = r.desc;
+  document.getElementById('res-traits').innerHTML = r.traits.map(t=>`<span class="trait">${t}</span>`).join('');
 
-  document.getElementById('res-traits').innerHTML = r.traits.map(t => `<span class="trait-tag">${t}</span>`).join('');
-
-  const dims = [
-    { left:'E', right:'I', val:scores[0] },
-    { left:'S', right:'N', val:scores[1] },
-    { left:'T', right:'F', val:scores[2] },
-    { left:'J', right:'P', val:scores[3] },
-  ];
-  document.getElementById('res-bars').innerHTML = dims.map(d => {
-    const pct = Math.max(5, Math.min(95, Math.round(((d.val + 5) / 10) * 100)));
-    return `<div class="dim-row"><div class="dim-label"><span>${d.left}</span><span>${d.right}</span></div><div class="dim-bar-bg"><div class="dim-bar-fill" style="width:${pct}%"></div></div></div>`;
+  const maxScore = 45;
+  const dimNames = [['E','I'],['S','N'],['T','F'],['J','P']];
+  document.getElementById('res-bars').innerHTML = scores.map((s,i)=>{
+    const pct = Math.max(5, Math.min(95, Math.round(((s + maxScore) / (maxScore*2)) * 100)));
+    const [left, right] = dimNames[i];
+    const dominant = s > 0 ? left : right;
+    const domPct = Math.round(Math.abs(s) / maxScore * 100);
+    return `<div class="dbar">
+      <div class="dbar-labels"><span>${left}</span><strong>${dominant} ${domPct}%</strong><span>${right}</span></div>
+      <div class="dbar-bg"><div class="dbar-fill" style="width:${pct}%"></div></div>
+    </div>`;
   }).join('');
 
-  // プレビューテキストに実際のタイプを反映
-  const pc = getPremiumContent(currentType);
-  document.getElementById('preview-text').textContent =
-    `💼 仕事：${pc.work.substring(0,40)}...　💕 恋愛：${pc.love.substring(0,40)}...　😤 ストレス：${pc.stress.substring(0,40)}...`;
+  // Premium preview
+  document.getElementById('prem-preview-text').textContent =
+    `${currentType}タイプは職場での強みが特にXXXにあります。対人関係においては、XXXな傾向があり、恋愛ではXXXなパートナーと相性が良いです。ストレスを感じたときはXXXな対処法が効果的です...`;
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function goPremium() {
-  // タイプをURLパラメータに含めてStripeへ
-  const link = PAYMENT_LINKS[currentType] || PAYMENT_LINKS.default;
-  const url = `${link}?client_reference_id=${currentType}`;
-  window.open(url, '_blank');
+  window.open((PAYMENT_LINKS[currentType]||PAYMENT_LINKS.default)+`?ref=${currentType}`,'_blank');
 }
 
 function retryQuiz() {
-  document.getElementById('result-screen').style.display = 'none';
-  document.getElementById('start-screen').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('result-screen').style.display='none';
+  document.getElementById('intro-card').style.display='block';
+  document.getElementById('quiz-form').innerHTML='';
+  answered=0; scores=[0,0,0,0];
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function getShareText() {
-  return `私のMBTIタイプは【${currentType}】${results[currentType].nickname}でした！🌸 当たってる〜？ `;
-}
-
-function getShareUrl() { return location.href.split('?')[0]; }
 
 function shareToLine() {
-  window.open(`https://line.me/R/msg/text/?${encodeURIComponent(getShareText() + getShareUrl())}`, '_blank');
+  const r = results[currentType];
+  const text = encodeURIComponent(`私のMBTIは【${currentType}】${r.nick}でした！🌸 あなたも試してみて → ${location.href} #MBTI診断 #性格診断`);
+  window.open(`https://line.me/R/msg/text/?${text}`,'_blank');
 }
 
 function shareToX() {
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}&url=${encodeURIComponent(getShareUrl())}&hashtags=MBTI診断,性格診断`, '_blank');
+  const r = results[currentType];
+  const text = encodeURIComponent(`私のMBTIは【${currentType}】${r.nick}でした！🌸 #MBTI診断 #性格診断`);
+  const url = encodeURIComponent(location.href);
+  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank');
 }
 </script>
 </body>
