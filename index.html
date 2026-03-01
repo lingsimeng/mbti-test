@@ -10,6 +10,12 @@
     body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:linear-gradient(135deg,#fde8f0 0%,#e8f4fd 50%,#f0fde8 100%);min-height:100vh;color:#444}
     .wrap{max-width:680px;margin:0 auto;padding:16px 16px 60px}
 
+    /* LANG SWITCHER */
+    .lang-switcher{position:fixed;top:12px;right:12px;z-index:1000;display:flex;gap:4px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-radius:50px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,.1)}
+    .lang-btn{border:none;background:transparent;border-radius:50px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;color:#888;transition:all .2s;white-space:nowrap}
+    .lang-btn.active{background:linear-gradient(135deg,#f472b6,#a78bfa);color:#fff;box-shadow:0 2px 8px rgba(244,114,182,.35)}
+    .lang-btn:hover:not(.active){color:#e8699a;background:rgba(244,114,182,.1)}
+
     /* HEADER */
     .site-header{text-align:center;padding:36px 0 28px}
     .site-header .logo{font-size:52px;display:block;margin-bottom:6px}
@@ -195,24 +201,20 @@
     .di-vs .left{background:rgba(244,114,182,.15);color:#e8699a}
     .di-vs .right{background:rgba(167,139,250,.15);color:#7c3aed}
 
-    /* 16タイプグリッド JP */
-    .types-grid-jp{display:flex;flex-direction:column;gap:16px;margin-bottom:20px}
-    .tg-group-label{font-size:13px;font-weight:800;color:#555;margin-bottom:8px;letter-spacing:.5px}
-    .tg-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-    .tgc{border-radius:14px;padding:10px 6px;text-align:center;color:#fff;transition:transform .2s;cursor:default}
-    .tgc:hover{transform:translateY(-3px) scale(1.04)}
-    .tgc span{font-size:24px;display:block;margin-bottom:4px}
-    .tgc strong{font-size:12px;font-weight:800;letter-spacing:1px;display:block}
-    .tgc small{font-size:9px;color:rgba(255,255,255,.8);display:block;margin-bottom:4px}
-    .tgc p{font-size:8px;color:rgba(255,255,255,.7);line-height:1.4;display:none}
-    @media(min-width:500px){.tgc p{display:block}}
-
     /* INTRO SIMPLE */
     .start-card{background:rgba(255,255,255,.88);border-radius:24px;padding:22px 24px;margin-bottom:20px;box-shadow:0 4px 20px rgba(232,105,154,.1)}
     .start-card p{font-size:15px;line-height:1.8;color:#666;text-align:center;margin-bottom:16px}
   </style>
 </head>
 <body>
+
+<!-- Language Switcher -->
+<div class="lang-switcher">
+  <button class="lang-btn active" data-lang="ja" onclick="setLang('ja')">🇯🇵 日本語</button>
+  <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">🇨🇳 中文</button>
+  <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇺🇸 English</button>
+</div>
+
 <div id="sticky-prog" class="sticky-progress">
   <div class="prog-row"><span id="prog-label">0 / 60問回答済み</span><span id="prog-pct">0%</span></div>
   <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
@@ -223,130 +225,89 @@
   <!-- HERO with 16 Characters -->
   <div class="hero fade-in">
     <div class="hero-title">
-      <h1>MBTI 性格診断</h1>
-      <p>あなたはどの16タイプ？</p>
+      <h1 data-i18n="heroTitle">MBTI 性格診断</h1>
+      <p data-i18n="heroSub">あなたはどの16タイプ？</p>
     </div>
 
     <!-- 16キャラクターグリッド -->
     <div class="char-grid">
-      <div class="char-card ct-INTJ"><span class="c-emoji">🔭</span><div class="c-type">INTJ</div><div class="c-name">戦略家</div></div>
-      <div class="char-card ct-INTP"><span class="c-emoji">🧩</span><div class="c-type">INTP</div><div class="c-name">論理学者</div></div>
-      <div class="char-card ct-ENTJ"><span class="c-emoji">👑</span><div class="c-type">ENTJ</div><div class="c-name">指揮官</div></div>
-      <div class="char-card ct-ENTP"><span class="c-emoji">💡</span><div class="c-type">ENTP</div><div class="c-name">討論者</div></div>
-      <div class="char-card ct-INFJ"><span class="c-emoji">🌟</span><div class="c-type">INFJ</div><div class="c-name">提唱者</div></div>
-      <div class="char-card ct-INFP"><span class="c-emoji">🌈</span><div class="c-type">INFP</div><div class="c-name">仲介者</div></div>
-      <div class="char-card ct-ENFJ"><span class="c-emoji">🌺</span><div class="c-type">ENFJ</div><div class="c-name">主人公</div></div>
-      <div class="char-card ct-ENFP"><span class="c-emoji">🦋</span><div class="c-type">ENFP</div><div class="c-name">運動家</div></div>
-      <div class="char-card ct-ISTJ"><span class="c-emoji">📚</span><div class="c-type">ISTJ</div><div class="c-name">管理者</div></div>
-      <div class="char-card ct-ISFJ"><span class="c-emoji">🌷</span><div class="c-type">ISFJ</div><div class="c-name">擁護者</div></div>
-      <div class="char-card ct-ESTJ"><span class="c-emoji">⚡</span><div class="c-type">ESTJ</div><div class="c-name">幹部</div></div>
-      <div class="char-card ct-ESFJ"><span class="c-emoji">🎀</span><div class="c-type">ESFJ</div><div class="c-name">領事官</div></div>
-      <div class="char-card ct-ISTP"><span class="c-emoji">🔧</span><div class="c-type">ISTP</div><div class="c-name">巨匠</div></div>
-      <div class="char-card ct-ISFP"><span class="c-emoji">🎨</span><div class="c-type">ISFP</div><div class="c-name">冒険者</div></div>
-      <div class="char-card ct-ESTP"><span class="c-emoji">🎯</span><div class="c-type">ESTP</div><div class="c-name">起業家</div></div>
-      <div class="char-card ct-ESFP"><span class="c-emoji">🎉</span><div class="c-type">ESFP</div><div class="c-name">芸能人</div></div>
+      <div class="char-card ct-INTJ"><span class="c-emoji">🔭</span><div class="c-type">INTJ</div><div class="c-name" data-type-nick="INTJ">戦略家</div></div>
+      <div class="char-card ct-INTP"><span class="c-emoji">🧩</span><div class="c-type">INTP</div><div class="c-name" data-type-nick="INTP">論理学者</div></div>
+      <div class="char-card ct-ENTJ"><span class="c-emoji">👑</span><div class="c-type">ENTJ</div><div class="c-name" data-type-nick="ENTJ">指揮官</div></div>
+      <div class="char-card ct-ENTP"><span class="c-emoji">💡</span><div class="c-type">ENTP</div><div class="c-name" data-type-nick="ENTP">討論者</div></div>
+      <div class="char-card ct-INFJ"><span class="c-emoji">🌟</span><div class="c-type">INFJ</div><div class="c-name" data-type-nick="INFJ">提唱者</div></div>
+      <div class="char-card ct-INFP"><span class="c-emoji">🌈</span><div class="c-type">INFP</div><div class="c-name" data-type-nick="INFP">仲介者</div></div>
+      <div class="char-card ct-ENFJ"><span class="c-emoji">🌺</span><div class="c-type">ENFJ</div><div class="c-name" data-type-nick="ENFJ">主人公</div></div>
+      <div class="char-card ct-ENFP"><span class="c-emoji">🦋</span><div class="c-type">ENFP</div><div class="c-name" data-type-nick="ENFP">運動家</div></div>
+      <div class="char-card ct-ISTJ"><span class="c-emoji">📚</span><div class="c-type">ISTJ</div><div class="c-name" data-type-nick="ISTJ">管理者</div></div>
+      <div class="char-card ct-ISFJ"><span class="c-emoji">🌷</span><div class="c-type">ISFJ</div><div class="c-name" data-type-nick="ISFJ">擁護者</div></div>
+      <div class="char-card ct-ESTJ"><span class="c-emoji">⚡</span><div class="c-type">ESTJ</div><div class="c-name" data-type-nick="ESTJ">幹部</div></div>
+      <div class="char-card ct-ESFJ"><span class="c-emoji">🎀</span><div class="c-type">ESFJ</div><div class="c-name" data-type-nick="ESFJ">領事官</div></div>
+      <div class="char-card ct-ISTP"><span class="c-emoji">🔧</span><div class="c-type">ISTP</div><div class="c-name" data-type-nick="ISTP">巨匠</div></div>
+      <div class="char-card ct-ISFP"><span class="c-emoji">🎨</span><div class="c-type">ISFP</div><div class="c-name" data-type-nick="ISFP">冒険者</div></div>
+      <div class="char-card ct-ESTP"><span class="c-emoji">🎯</span><div class="c-type">ESTP</div><div class="c-name" data-type-nick="ESTP">起業家</div></div>
+      <div class="char-card ct-ESFP"><span class="c-emoji">🎉</span><div class="c-type">ESFP</div><div class="c-name" data-type-nick="ESFP">芸能人</div></div>
     </div>
 
     <!-- CTA -->
     <div class="hero-cta">
       <div class="stats">
-        <div class="stat"><div class="num">60</div><div class="lbl">問</div></div>
-        <div class="stat"><div class="num">16</div><div class="lbl">タイプ</div></div>
-        <div class="stat"><div class="num">5分</div><div class="lbl">で完了</div></div>
-        <div class="stat"><div class="num">無料</div><div class="lbl">で診断</div></div>
+        <div class="stat"><div class="num">60</div><div class="lbl" data-i18n="stat0">問</div></div>
+        <div class="stat"><div class="num">16</div><div class="lbl" data-i18n="stat1">タイプ</div></div>
+        <div class="stat"><div class="num">5分</div><div class="lbl" data-i18n="stat2">で完了</div></div>
+        <div class="stat"><div class="num" data-i18n="stat3num">無料</div><div class="lbl" data-i18n="stat3lbl">で診断</div></div>
       </div>
-      <button class="btn-start" onclick="startQuiz()">診断スタート！ 🚀</button>
+      <button class="btn-start" data-i18n="btnStart" onclick="startQuiz()">診断スタート！ 🚀</button>
     </div>
   </div>
 
   <!-- 3STEPS -->
   <div class="steps fade-in">
-    <div class="step"><span class="s-num">STEP 1</span><span class="s-icon">📝</span><div class="s-title">テストに<br>答える</div></div>
-    <div class="step"><span class="s-num">STEP 2</span><span class="s-icon">🔍</span><div class="s-title">結果を<br>チェック</div></div>
-    <div class="step"><span class="s-num">STEP 3</span><span class="s-icon">🚀</span><div class="s-title">可能性を<br>引き出す</div></div>
+    <div class="step"><span class="s-num">STEP 1</span><span class="s-icon">📝</span><div class="s-title" data-i18n="step1">テストに<br>答える</div></div>
+    <div class="step"><span class="s-num">STEP 2</span><span class="s-icon">🔍</span><div class="s-title" data-i18n="step2">結果を<br>チェック</div></div>
+    <div class="step"><span class="s-num">STEP 3</span><span class="s-icon">🚀</span><div class="s-title" data-i18n="step3">可能性を<br>引き出す</div></div>
   </div>
 
   <!-- MBTI ABOUT -->
   <div class="about-card fade-in">
-    <h2>🧠 MBTIとは？</h2>
-    <p class="about-lead">MBTI（Myers-Briggs Type Indicator）は、人の性格を4つの次元で分類する世界で最も広く使われる性格診断のひとつです。あなたの思考・感情・行動パターンを16タイプに分けて理解できます。</p>
+    <h2 data-i18n="aboutTitle">🧠 MBTIとは？</h2>
+    <p class="about-lead" data-i18n="aboutLead">MBTI（Myers-Briggs Type Indicator）は、人の性格を4つの次元で分類する世界で最も広く使われる性格診断のひとつです。あなたの思考・感情・行動パターンを16タイプに分けて理解できます。</p>
 
-    <!-- 16タイプ 日本語グリッド (非表示)
-    
-    <div class="types-grid-jp">
-      <div class="tg-group">
-        <div class="tg-group-label">分析家 🔬</div>
-        <div class="tg-row">
-          <div class="tgc" style="background:linear-gradient(135deg,#1e3a5f,#2d5986)"><span>🔭</span><strong>INTJ</strong><small>戦略家</small><p>独立した思考力と長期ビジョンを持つ完璧主義者</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#2d1b4e,#5b2d8a)"><span>🧩</span><strong>INTP</strong><small>論理学者</small><p>アイデアと理論に魅了される知的探求者</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#7c1d1d,#b91c1c)"><span>👑</span><strong>ENTJ</strong><small>指揮官</small><p>生まれながらのリーダー、目標達成の鬼</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#854d0e,#ca8a04)"><span>💡</span><strong>ENTP</strong><small>討論者</small><p>常識に挑戦するアイデアマン</p></div>
-        </div>
-      </div>
-      <div class="tg-group">
-        <div class="tg-group-label">外交官 🌺</div>
-        <div class="tg-row">
-          <div class="tgc" style="background:linear-gradient(135deg,#134e4a,#0f766e)"><span>🌟</span><strong>INFJ</strong><small>提唱者</small><p>深い洞察力と強い共感力を持つ稀少タイプ</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)"><span>🌈</span><strong>INFP</strong><small>仲介者</small><p>理想と価値観に忠実な夢見る詩人</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#831843,#be185d)"><span>🌺</span><strong>ENFJ</strong><small>主人公</small><p>カリスマ的リーダーで人を引き付ける存在</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#7c2d12,#ea580c)"><span>🦋</span><strong>ENFP</strong><small>運動家</small><p>自由と情熱で世界を明るくする探求者</p></div>
-        </div>
-      </div>
-      <div class="tg-group">
-        <div class="tg-group-label">番人 🛡️</div>
-        <div class="tg-row">
-          <div class="tgc" style="background:linear-gradient(135deg,#1e3a5f,#1d4ed8)"><span>📚</span><strong>ISTJ</strong><small>管理者</small><p>責任感が強く信頼の置けるルール守護者</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#064e3b,#059669)"><span>🌷</span><strong>ISFJ</strong><small>擁護者</small><p>思いやりにあふれる縁の下の力持ち</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#7f1d1d,#dc2626)"><span>⚡</span><strong>ESTJ</strong><small>幹部</small><p>秩序と組織を守る生まれながらの管理者</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#831843,#ec4899)"><span>🎀</span><strong>ESFJ</strong><small>領事官</small><p>社交的で思いやり溢れるムードメーカー</p></div>
-        </div>
-      </div>
-      <div class="tg-group">
-        <div class="tg-group-label">探検家 🎯</div>
-        <div class="tg-row">
-          <div class="tgc" style="background:linear-gradient(135deg,#374151,#6b7280)"><span>🔧</span><strong>ISTP</strong><small>巨匠</small><p>クールな観察眼を持つ問題解決のプロ</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#4a044e,#a21caf)"><span>🎨</span><strong>ISFP</strong><small>冒険者</small><p>感受性豊かな穏やかなアーティスト</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#7c2d12,#c2410c)"><span>🎯</span><strong>ESTP</strong><small>起業家</small><p>エネルギッシュで瞬発力抜群の行動派</p></div>
-          <div class="tgc" style="background:linear-gradient(135deg,#78350f,#f59e0b)"><span>🎉</span><strong>ESFP</strong><small>エンターテイナー</small><p>いるだけで場を明るくする大スター</p></div>
-        </div>
-      </div>
-    </div>
-
-    --> <div class="dim-intro-grid">
+    <div class="dim-intro-grid">
       <div class="dim-intro ei">
         <div class="di-icon">🌐</div>
-        <div class="di-title">エネルギーの方向</div>
-        <div class="di-desc">エネルギーをどこから得るか。外の世界か、内の世界か。</div>
+        <div class="di-title" data-i18n="dim0title">エネルギーの方向</div>
+        <div class="di-desc" data-i18n="dim0desc">エネルギーをどこから得るか。外の世界か、内の世界か。</div>
         <div class="di-vs">
-          <span class="left">E 外向型</span>
-          <span class="right">I 内向型</span>
+          <span class="left" data-i18n="dim0left">E 外向型</span>
+          <span class="right" data-i18n="dim0right">I 内向型</span>
         </div>
       </div>
       <div class="dim-intro sn">
         <div class="di-icon">💡</div>
-        <div class="di-title">情報の受け取り方</div>
-        <div class="di-desc">現実の事実を重視するか、可能性・直感を重視するか。</div>
+        <div class="di-title" data-i18n="dim1title">情報の受け取り方</div>
+        <div class="di-desc" data-i18n="dim1desc">現実の事実を重視するか、可能性・直感を重視するか。</div>
         <div class="di-vs">
-          <span class="left">S 感覚型</span>
-          <span class="right">N 直感型</span>
+          <span class="left" data-i18n="dim1left">S 感覚型</span>
+          <span class="right" data-i18n="dim1right">N 直感型</span>
         </div>
       </div>
       <div class="dim-intro tf">
         <div class="di-icon">❤️</div>
-        <div class="di-title">意思決定の方法</div>
-        <div class="di-desc">論理と客観性か、感情と価値観か。</div>
+        <div class="di-title" data-i18n="dim2title">意思決定の方法</div>
+        <div class="di-desc" data-i18n="dim2desc">論理と客観性か、感情と価値観か。</div>
         <div class="di-vs">
-          <span class="left">T 思考型</span>
-          <span class="right">F 感情型</span>
+          <span class="left" data-i18n="dim2left">T 思考型</span>
+          <span class="right" data-i18n="dim2right">F 感情型</span>
         </div>
       </div>
       <div class="dim-intro jp">
         <div class="di-icon">🗂️</div>
-        <div class="di-title">生活のスタイル</div>
-        <div class="di-desc">計画的・決断重視か、柔軟・開放的か。</div>
+        <div class="di-title" data-i18n="dim3title">生活のスタイル</div>
+        <div class="di-desc" data-i18n="dim3desc">計画的・決断重視か、柔軟・開放的か。</div>
         <div class="di-vs">
-          <span class="left">J 判断型</span>
-          <span class="right">P 知覚型</span>
+          <span class="left" data-i18n="dim3left">J 判断型</span>
+          <span class="right" data-i18n="dim3right">P 知覚型</span>
         </div>
       </div>
     </div>
@@ -354,21 +315,21 @@
 
   <!-- START -->
   <div class="start-card fade-in">
-    <p>各文章を読んで、<strong>どれくらい自分に当てはまるか</strong>を7段階で選んでください。直感で答えるのがベスト✨<br>全60問・所要時間：約5〜8分</p>
-    <button class="btn-start" onclick="startQuiz()">今すぐ診断する →</button>
+    <p id="start-desc">各文章を読んで、<strong>どれくらい自分に当てはまるか</strong>を7段階で選んでください。直感で答えるのがベスト✨<br>全60問・所要時間：約5〜8分</p>
+    <button class="btn-start" data-i18n="btnStart2" onclick="startQuiz()">今すぐ診断する →</button>
   </div>
   </div>
 
   <!-- QUIZ -->
   <div id="quiz-form"></div>
   <div class="submit-wrap" id="submit-wrap">
-    <button class="btn-submit" onclick="calcResult()">結果を見る ✨</button>
+    <button class="btn-submit" data-i18n="submitBtn" onclick="calcResult()">結果を見る ✨</button>
   </div>
 
   <!-- LOADING -->
   <div id="loading">
     <div class="spinner"></div>
-    <p style="color:#e8699a;font-weight:700;font-size:16px">診断中...✨</p>
+    <p style="color:#e8699a;font-weight:700;font-size:16px" data-i18n="loading">診断中...✨</p>
   </div>
 
   <!-- RESULT -->
@@ -385,41 +346,41 @@
     <!-- PREMIUM -->
     <div class="premium-card fade-in">
       <div class="prem-badge">👑 PREMIUM</div>
-      <div class="prem-title">あなただけの詳細分析レポート</div>
-      <div class="prem-sub">無料診断の5倍以上の情報量！仕事・恋愛・ストレス対策まで丸ごとわかる✨</div>
+      <div class="prem-title" data-i18n="premTitle">あなただけの詳細分析レポート</div>
+      <div class="prem-sub" data-i18n="premSub">無料診断の5倍以上の情報量！仕事・恋愛・ストレス対策まで丸ごとわかる✨</div>
       <div class="prem-preview">
         <div class="prem-blur" id="prem-preview-text">あなたのタイプは職場での強みが特にXXXにあります。対人関係においては、XXXな傾向があり、恋愛ではXXXなパートナーと相性が良いです。ストレスを感じたときはXXXな対処法が効果的です...</div>
-        <div class="prem-overlay"><div class="lock">🔒</div><p>購入後に全文が表示されます</p></div>
+        <div class="prem-overlay"><div class="lock">🔒</div><p data-i18n="premLock">購入後に全文が表示されます</p></div>
       </div>
-      <ul class="prem-features">
-        <li>💼 <span><strong>仕事・職場での強み</strong> — 輝くシーンと苦手な環境</span></li>
-        <li>💕 <span><strong>恋愛・相性タイプ</strong> — 相性のいいMBTIと関係パターン</span></li>
-        <li>😤 <span><strong>ストレスのサインと対処法</strong> — 崩れやすいポイントと回復法</span></li>
-        <li>🌱 <span><strong>成長ポイント</strong> — 弱みを強みに変えるアドバイス</span></li>
-        <li>🤝 <span><strong>相性の良い・悪いタイプ一覧</strong> — 16タイプとの関係性まとめ</span></li>
-        <li>🎯 <span><strong>向いている職業・趣味リスト</strong> — タイプ別おすすめライフスタイル</span></li>
+      <ul class="prem-features" id="prem-features-list">
+        <li>💼 <span><strong data-i18n="pf0title">仕事・職場での強み</strong> <span data-i18n="pf0desc">— 輝くシーンと苦手な環境</span></span></li>
+        <li>💕 <span><strong data-i18n="pf1title">恋愛・相性タイプ</strong> <span data-i18n="pf1desc">— 相性のいいMBTIと関係パターン</span></span></li>
+        <li>😤 <span><strong data-i18n="pf2title">ストレスのサインと対処法</strong> <span data-i18n="pf2desc">— 崩れやすいポイントと回復法</span></span></li>
+        <li>🌱 <span><strong data-i18n="pf3title">成長ポイント</strong> <span data-i18n="pf3desc">— 弱みを強みに変えるアドバイス</span></span></li>
+        <li>🤝 <span><strong data-i18n="pf4title">相性の良い・悪いタイプ一覧</strong> <span data-i18n="pf4desc">— 16タイプとの関係性まとめ</span></span></li>
+        <li>🎯 <span><strong data-i18n="pf5title">向いている職業・趣味リスト</strong> <span data-i18n="pf5desc">— タイプ別おすすめライフスタイル</span></span></li>
       </ul>
       <div class="prem-price">
         <div><span class="price-orig">¥1,500</span><span class="price-main">¥500</span></div>
-        <div class="price-note">期間限定価格 · 買い切り · 即時閲覧</div>
+        <div class="price-note" data-i18n="premPriceNote">期間限定価格 · 買い切り · 即時閲覧</div>
       </div>
-      <button class="btn-premium" onclick="goPremium()">🔓 今すぐ詳細レポートを見る →</button>
-      <p style="text-align:center;font-size:11px;color:#bbb;margin-top:10px">クレジットカード・コンビニ払い対応</p>
+      <button class="btn-premium" data-i18n="premBtn" onclick="goPremium()">🔓 今すぐ詳細レポートを見る →</button>
+      <p style="text-align:center;font-size:11px;color:#bbb;margin-top:10px" data-i18n="premPayment">クレジットカード・コンビニ払い対応</p>
     </div>
 
     <!-- SHARE -->
     <div class="share-card fade-in">
-      <div class="share-title">🎉 結果をシェアしよう！</div>
-      <button class="btn-line" onclick="shareToLine()">📲 LINEでシェア</button>
-      <button class="btn-x" onclick="shareToX()">𝕏 Xでシェア</button>
+      <div class="share-title" data-i18n="shareTitle">🎉 結果をシェアしよう！</div>
+      <button class="btn-line" data-i18n="shareLineBtn" onclick="shareToLine()">📲 LINEでシェア</button>
+      <button class="btn-x" data-i18n="shareXBtn" onclick="shareToX()">𝕏 Xでシェア</button>
     </div>
 
     <div class="retry-card fade-in">
-      <button class="btn-retry" onclick="retryQuiz()">🔄 もう一度診断する</button>
-      <p style="font-size:12px;color:#ccc">友達にも教えてあげよう🌸</p>
+      <button class="btn-retry" data-i18n="retryBtn" onclick="retryQuiz()">🔄 もう一度診断する</button>
+      <p style="font-size:12px;color:#ccc" data-i18n="retryNote">友達にも教えてあげよう🌸</p>
     </div>
 
-    <div class="disclaimer">⚠️ このテストは娯楽目的のMBTI風診断です。公式のMBTI®テストとは異なります。結果は科学的根拠を保証するものではありません。</div>
+    <div class="disclaimer" data-i18n="disclaimer">⚠️ このテストは娯楽目的のMBTI風診断です。公式のMBTI®テストとは異なります。結果は科学的根拠を保証するものではありません。</div>
   </div>
 
   <footer>© 2025 MBTI診断 | 娯楽目的の参考コンテンツです</footer>
@@ -427,101 +388,342 @@
 
 <script>
 // ============================================================
+// i18n Translations
+// ============================================================
+const i18n = {
+  ja: {
+    title: 'MBTI性格診断 | 無料・60問・本格派🌸',
+    heroTitle: 'MBTI 性格診断',
+    heroSub: 'あなたはどの16タイプ？',
+    stat0: '問', stat1: 'タイプ', stat2: 'で完了', stat3num: '無料', stat3lbl: 'で診断',
+    btnStart: '診断スタート！ 🚀',
+    btnStart2: '今すぐ診断する →',
+    step1: 'テストに<br>答える', step2: '結果を<br>チェック', step3: '可能性を<br>引き出す',
+    aboutTitle: '🧠 MBTIとは？',
+    aboutLead: 'MBTI（Myers-Briggs Type Indicator）は、人の性格を4つの次元で分類する世界で最も広く使われる性格診断のひとつです。あなたの思考・感情・行動パターンを16タイプに分けて理解できます。',
+    dim0title: 'エネルギーの方向', dim0desc: 'エネルギーをどこから得るか。外の世界か、内の世界か。', dim0left: 'E 外向型', dim0right: 'I 内向型',
+    dim1title: '情報の受け取り方', dim1desc: '現実の事実を重視するか、可能性・直感を重視するか。', dim1left: 'S 感覚型', dim1right: 'N 直感型',
+    dim2title: '意思決定の方法', dim2desc: '論理と客観性か、感情と価値観か。', dim2left: 'T 思考型', dim2right: 'F 感情型',
+    dim3title: '生活のスタイル', dim3desc: '計画的・決断重視か、柔軟・開放的か。', dim3left: 'J 判断型', dim3right: 'P 知覚型',
+    startDesc: '各文章を読んで、<strong>どれくらい自分に当てはまるか</strong>を7段階で選んでください。直感で答えるのがベスト✨<br>全60問・所要時間：約5〜8分',
+    submitBtn: '結果を見る ✨',
+    loading: '診断中...✨',
+    scaleLeft: '👍 強く同意', scaleMid: '中立', scaleRight: '強く不同意 👎',
+    progLabel: (n) => `${n} / 60問回答済み`,
+    nickSuffix: (nick) => `「${nick}」タイプ`,
+    premTitle: 'あなただけの詳細分析レポート',
+    premSub: '無料診断の5倍以上の情報量！仕事・恋愛・ストレス対策まで丸ごとわかる✨',
+    premLock: '購入後に全文が表示されます',
+    pf0title: '仕事・職場での強み', pf0desc: '— 輝くシーンと苦手な環境',
+    pf1title: '恋愛・相性タイプ', pf1desc: '— 相性のいいMBTIと関係パターン',
+    pf2title: 'ストレスのサインと対処法', pf2desc: '— 崩れやすいポイントと回復法',
+    pf3title: '成長ポイント', pf3desc: '— 弱みを強みに変えるアドバイス',
+    pf4title: '相性の良い・悪いタイプ一覧', pf4desc: '— 16タイプとの関係性まとめ',
+    pf5title: '向いている職業・趣味リスト', pf5desc: '— タイプ別おすすめライフスタイル',
+    premPriceNote: '期間限定価格 · 買い切り · 即時閲覧',
+    premBtn: '🔓 今すぐ詳細レポートを見る →',
+    premPayment: 'クレジットカード・コンビニ払い対応',
+    shareTitle: '🎉 結果をシェアしよう！',
+    shareLineBtn: '📲 LINEでシェア',
+    shareXBtn: '𝕏 Xでシェア',
+    retryBtn: '🔄 もう一度診断する',
+    retryNote: '友達にも教えてあげよう🌸',
+    disclaimer: '⚠️ このテストは娯楽目的のMBTI風診断です。公式のMBTI®テストとは異なります。結果は科学的根拠を保証するものではありません。',
+    dimInfoNames: ['社交・コミュニケーション','思考・情報処理','意思決定','生活スタイル'],
+    dimInfoLeft: ['E（外向型）','S（感覚型）','T（思考型）','J（判断型）'],
+    dimInfoRight: ['I（内向型）','N（直感型）','F（感情型）','P（知覚型）'],
+    shareText: (type, nick) => `私のMBTIは【${type}】${nick}でした！🌸 あなたも試してみて → ${location.href} #MBTI診断 #性格診断`,
+    shareXText: (type, nick) => `私のMBTIは【${type}】${nick}でした！🌸 #MBTI診断 #性格診断`,
+  },
+  zh: {
+    title: 'MBTI性格测试 | 免费・60题・专业版',
+    heroTitle: 'MBTI 性格测试',
+    heroSub: '你是哪种16型人格？',
+    stat0: '题', stat1: '类型', stat2: '完成', stat3num: '免费', stat3lbl: '免费',
+    btnStart: '开始测试！ 🚀',
+    btnStart2: '立即测试 →',
+    step1: '完成<br>测试', step2: '查看<br>结果', step3: '释放<br>潜力',
+    aboutTitle: '🧠 什么是MBTI？',
+    aboutLead: 'MBTI（迈尔斯-布里格斯类型指标）是世界上使用最广泛的性格测试之一，将人的性格分为4个维度。通过了解你的思维、情感和行为模式，可以将其归入16种类型之一。',
+    dim0title: '能量方向', dim0desc: '从哪里获取能量？外部世界还是内心世界？', dim0left: 'E 外向', dim0right: 'I 内向',
+    dim1title: '信息获取', dim1desc: '重视现实事实，还是可能性与直觉？', dim1left: 'S 感觉', dim1right: 'N 直觉',
+    dim2title: '决策方式', dim2desc: '基于逻辑与客观性，还是情感与价值观？', dim2left: 'T 思考', dim2right: 'F 情感',
+    dim3title: '生活方式', dim3desc: '计划性与决断，还是灵活与开放？', dim3left: 'J 判断', dim3right: 'P 感知',
+    startDesc: '请阅读每道题，<strong>选择最符合自己的程度</strong>（7个等级）。凭直觉作答最佳✨<br>共60题・约需5〜8分钟',
+    submitBtn: '查看结果 ✨',
+    loading: '分析中...✨',
+    scaleLeft: '👍 非常同意', scaleMid: '中立', scaleRight: '非常不同意 👎',
+    progLabel: (n) => `已回答 ${n} / 60题`,
+    nickSuffix: (nick) => `「${nick}」型`,
+    premTitle: '专属详细分析报告',
+    premSub: '是免费版信息量的5倍以上！工作、恋爱、压力应对全面解析✨',
+    premLock: '购买后即可查看全文',
+    pf0title: '职场优势', pf0desc: '— 发光场景与不擅长的环境',
+    pf1title: '恋爱与相性', pf1desc: '— 相性好的MBTI与关系模式',
+    pf2title: '压力信号与应对', pf2desc: '— 容易崩溃的点与恢复方法',
+    pf3title: '成长建议', pf3desc: '— 将弱点转化为优势的建议',
+    pf4title: '相性类型一览', pf4desc: '— 与16种类型的关系总结',
+    pf5title: '适合的职业与兴趣', pf5desc: '— 按类型推荐的生活方式',
+    premPriceNote: '限时价格・一次性购买・即时查看',
+    premBtn: '🔓 立即查看详细报告 →',
+    premPayment: '支持信用卡付款',
+    shareTitle: '🎉 分享结果！',
+    shareLineBtn: '📲 分享到LINE',
+    shareXBtn: '𝕏 分享到X',
+    retryBtn: '🔄 重新测试',
+    retryNote: '告诉你的朋友🌸',
+    disclaimer: '⚠️ 本测试为娱乐性质的MBTI参考诊断，与官方MBTI®测试不同，结果不代表科学依据。',
+    dimInfoNames: ['社交・沟通','思维・信息处理','决策方式','生活风格'],
+    dimInfoLeft: ['E（外向）','S（感觉）','T（思考）','J（判断）'],
+    dimInfoRight: ['I（内向）','N（直觉）','F（情感）','P（感知）'],
+    shareText: (type, nick) => `我的MBTI是【${type}】${nick}！🌸 快来试试 → ${location.href} #MBTI测试 #性格测试`,
+    shareXText: (type, nick) => `我的MBTI是【${type}】${nick}！🌸 #MBTI测试 #性格测试`,
+  },
+  en: {
+    title: 'MBTI Personality Test | Free・60 Questions',
+    heroTitle: 'MBTI Personality Test',
+    heroSub: 'Which of the 16 types are you?',
+    stat0: "Q's", stat1: 'Types', stat2: 'mins', stat3num: 'Free', stat3lbl: 'Free',
+    btnStart: 'Start Test! 🚀',
+    btnStart2: 'Take the Test →',
+    step1: 'Take the<br>Test', step2: 'Check<br>Results', step3: 'Unlock<br>Potential',
+    aboutTitle: '🧠 What is MBTI?',
+    aboutLead: 'MBTI (Myers-Briggs Type Indicator) is one of the most widely used personality assessments in the world, classifying personality into 4 dimensions. Understand your thinking, emotions, and behavior patterns across 16 distinct types.',
+    dim0title: 'Energy Direction', dim0desc: 'Where do you get your energy? The outer world or inner world?', dim0left: 'E Extrovert', dim0right: 'I Introvert',
+    dim1title: 'Information', dim1desc: 'Do you focus on facts and reality, or possibilities and intuition?', dim1left: 'S Sensing', dim1right: 'N Intuitive',
+    dim2title: 'Decision Making', dim2desc: 'Do you decide based on logic and objectivity, or feelings and values?', dim2left: 'T Thinking', dim2right: 'F Feeling',
+    dim3title: 'Lifestyle', dim3desc: 'Are you planned and decisive, or flexible and open?', dim3left: 'J Judging', dim3right: 'P Perceiving',
+    startDesc: 'Read each statement and <strong>select how much it applies to you</strong> (7 levels). Go with your gut feeling✨<br>60 questions・approx. 5-8 minutes',
+    submitBtn: 'See Results ✨',
+    loading: 'Analyzing...✨',
+    scaleLeft: '👍 Strongly Agree', scaleMid: 'Neutral', scaleRight: 'Strongly Disagree 👎',
+    progLabel: (n) => `${n} / 60 answered`,
+    nickSuffix: (nick) => `"${nick}" Type`,
+    premTitle: 'Your Personal Detailed Analysis',
+    premSub: '5x more insights than the free version! Career, love, stress management and more✨',
+    premLock: 'Full report unlocked after purchase',
+    pf0title: 'Work & Career Strengths', pf0desc: '— Where you shine & struggle',
+    pf1title: 'Love & Compatibility', pf1desc: '— Best MBTI matches & relationship patterns',
+    pf2title: 'Stress Signs & Recovery', pf2desc: '— Triggers & recovery strategies',
+    pf3title: 'Growth Points', pf3desc: '— Turning weaknesses into strengths',
+    pf4title: 'Compatibility Chart', pf4desc: '— Relationship summary with all 16 types',
+    pf5title: 'Career & Hobby Recommendations', pf5desc: '— Type-based lifestyle suggestions',
+    premPriceNote: 'Limited Price・One-time・Instant Access',
+    premBtn: '🔓 View Detailed Report →',
+    premPayment: 'Credit card accepted',
+    shareTitle: '🎉 Share your result!',
+    shareLineBtn: '📲 Share on LINE',
+    shareXBtn: '𝕏 Share on X',
+    retryBtn: '🔄 Try Again',
+    retryNote: 'Share with friends🌸',
+    disclaimer: '⚠️ This test is for entertainment purposes only and is not the official MBTI® assessment. Results are not scientifically validated.',
+    dimInfoNames: ['Social / Communication','Thinking / Information','Decision Making','Lifestyle'],
+    dimInfoLeft: ['E (Extrovert)','S (Sensing)','T (Thinking)','J (Judging)'],
+    dimInfoRight: ['I (Introvert)','N (Intuitive)','F (Feeling)','P (Perceiving)'],
+    shareText: (type, nick) => `My MBTI type is 【${type}】${nick}! 🌸 Try it too → ${location.href} #MBTITest #PersonalityTest`,
+    shareXText: (type, nick) => `My MBTI type is 【${type}】${nick}! 🌸 #MBTITest #PersonalityTest`,
+  }
+};
+
+// ============================================================
 // 問題データ
-// reversed: true → スコアを反転
-// dim: 0=E/I, 1=S/N, 2=T/F, 3=J/P
 // ============================================================
 const questions = [
   // E/I
-  {dim:0,text:"人の集まりの場では、会話の中心になりやすい"},
-  {dim:0,text:"新しい人と話すことにエネルギーを感じる"},
-  {dim:0,text:"一人で過ごすよりも、人と一緒にいる方が楽しい"},
-  {dim:0,text:"初対面の人ともすぐに打ち解けられる"},
-  {dim:0,text:"パーティーや集まりの後、もっと続けたいと思うことが多い"},
-  {dim:0,text:"自分の考えは、話しながらまとめていくことが多い"},
-  {dim:0,text:"友人が多い方で、広い人間関係を持っている"},
-  {dim:0,text:"静かな場所よりも、賑やかな環境の方が集中できることがある"},
-  {dim:0,text:"グループ作業よりも一人作業の方が落ち着く",reversed:true},
-  {dim:0,text:"人と長時間一緒にいると、疲れを感じることがある",reversed:true},
-  {dim:0,text:"知らない人に話しかけることに抵抗がない"},
-  {dim:0,text:"電話よりもメッセージを好む",reversed:true},
-  {dim:0,text:"自分の気持ちや考えをオープンに話すことが多い"},
-  {dim:0,text:"週末は外出して人と会う予定を入れたい"},
-  {dim:0,text:"会話が途切れると、自分から話題を作ろうとする"},
+  {dim:0,ja:"人の集まりの場では、会話の中心になりやすい",zh:"在聚会中，我经常是话题的中心",en:"I tend to be the center of conversation in social gatherings"},
+  {dim:0,ja:"新しい人と話すことにエネルギーを感じる",zh:"与新朋友交谈让我充满活力",en:"Talking to new people gives me energy"},
+  {dim:0,ja:"一人で過ごすよりも、人と一緒にいる方が楽しい",zh:"和别人在一起比独处更让我快乐",en:"I enjoy being with others more than being alone"},
+  {dim:0,ja:"初対面の人ともすぐに打ち解けられる",zh:"我很快就能和初次见面的人熟悉起来",en:"I warm up quickly to people I've just met"},
+  {dim:0,ja:"パーティーや集まりの後、もっと続けたいと思うことが多い",zh:"派对结束后，我常常还想继续",en:"After parties, I often want to keep the fun going"},
+  {dim:0,ja:"自分の考えは、話しながらまとめていくことが多い",zh:"我常常在交谈中整理自己的想法",en:"I often organize my thoughts by talking them through"},
+  {dim:0,ja:"友人が多い方で、広い人間関係を持っている",zh:"我朋友很多，人脉广泛",en:"I have many friends and a wide social network"},
+  {dim:0,ja:"静かな場所よりも、賑やかな環境の方が集中できることがある",zh:"有时候热闹的环境比安静的地方更让我集中",en:"I sometimes focus better in lively environments than quiet ones"},
+  {dim:0,ja:"グループ作業よりも一人作業の方が落ち着く",zh:"独自工作比团队协作更让我安心",en:"I prefer working alone rather than in groups",reversed:true},
+  {dim:0,ja:"人と長時間一緒にいると、疲れを感じることがある",zh:"和别人相处太久会让我感到疲惫",en:"Being with people for too long makes me feel drained",reversed:true},
+  {dim:0,ja:"知らない人に話しかけることに抵抗がない",zh:"我不介意主动和陌生人说话",en:"I don't mind initiating conversation with strangers"},
+  {dim:0,ja:"電話よりもメッセージを好む",zh:"我更喜欢发消息而不是打电话",en:"I prefer texting over phone calls",reversed:true},
+  {dim:0,ja:"自分の気持ちや考えをオープンに話すことが多い",zh:"我经常坦率地表达自己的想法和感受",en:"I often openly share my thoughts and feelings"},
+  {dim:0,ja:"週末は外出して人と会う予定を入れたい",zh:"周末我喜欢出门和朋友见面",en:"On weekends, I prefer going out and meeting people"},
+  {dim:0,ja:"会話が途切れると、自分から話題を作ろうとする",zh:"对话冷场时，我会主动找话题",en:"When conversation lulls, I try to start a new topic"},
   // S/N
-  {dim:1,text:"細かいデータや事実に基づいて判断することを好む"},
-  {dim:1,text:"実際に経験したことから学ぶのが得意だ"},
-  {dim:1,text:"現実的・具体的な解決策を優先する"},
-  {dim:1,text:"手順通りに進めることで安心感を得る"},
-  {dim:1,text:"抽象的なアイデアよりも、実用的な情報の方が役に立つ"},
-  {dim:1,text:"大きなビジョンよりも、今できることに集中する"},
-  {dim:1,text:"直感よりも、証拠や事実を信頼する"},
-  {dim:1,text:"仕事や作業では、実績のある方法を使うことが多い"},
-  {dim:1,text:"突飛なアイデアよりも、現実的なプランを好む"},
-  {dim:1,text:"「なぜそうなのか」より「どうすれば良いか」を考える"},
-  {dim:1,text:"将来の可能性を考えることに多くの時間を使う",reversed:true},
-  {dim:1,text:"パターンやつながりを見つけることが得意だ",reversed:true},
-  {dim:1,text:"革新的なアイデアを考えることにワクワクする",reversed:true},
-  {dim:1,text:"理論や概念について深く考えることが好きだ",reversed:true},
-  {dim:1,text:"日常の中に隠れた意味やシンボルを見つけることが楽しい",reversed:true},
+  {dim:1,ja:"細かいデータや事実に基づいて判断することを好む",zh:"我喜欢根据详细数据和事实来做判断",en:"I prefer making decisions based on detailed data and facts"},
+  {dim:1,ja:"実際に経験したことから学ぶのが得意だ",zh:"我擅长从实际经验中学习",en:"I learn best from hands-on experience"},
+  {dim:1,ja:"現実的・具体的な解決策を優先する",zh:"我优先考虑现实可行的解决方案",en:"I prioritize practical and concrete solutions"},
+  {dim:1,ja:"手順通りに進めることで安心感を得る",zh:"按照步骤进行让我感到安心",en:"Following step-by-step procedures gives me a sense of security"},
+  {dim:1,ja:"抽象的なアイデアよりも、実用的な情報の方が役に立つ",zh:"实用信息比抽象概念更有用",en:"Practical information is more useful to me than abstract ideas"},
+  {dim:1,ja:"大きなビジョンよりも、今できることに集中する",zh:"比起宏大愿景，我更专注于眼前能做的事",en:"I focus on what I can do now rather than big visions"},
+  {dim:1,ja:"直感よりも、証拠や事実を信頼する",zh:"我更信任证据和事实，而非直觉",en:"I trust evidence and facts more than intuition"},
+  {dim:1,ja:"仕事や作業では、実績のある方法を使うことが多い",zh:"工作中我常用经过验证的方法",en:"I tend to use tried-and-tested methods at work"},
+  {dim:1,ja:"突飛なアイデアよりも、現実的なプランを好む",zh:"我更喜欢现实的计划，而非奇特的想法",en:"I prefer realistic plans over far-fetched ideas"},
+  {dim:1,ja:"「なぜそうなのか」より「どうすれば良いか」を考える",zh:'比起"为什么"，我更关注"怎么做"',en:'I focus more on "how to do it" than "why it is so"'},
+  {dim:1,ja:"将来の可能性を考えることに多くの時間を使う",zh:"我花很多时间思考未来的可能性",en:"I spend a lot of time thinking about future possibilities",reversed:true},
+  {dim:1,ja:"パターンやつながりを見つけることが得意だ",zh:"我擅长发现规律和联系",en:"I'm good at finding patterns and connections",reversed:true},
+  {dim:1,ja:"革新的なアイデアを考えることにワクワクする",zh:"思考创新想法让我兴奋",en:"I get excited thinking about innovative ideas",reversed:true},
+  {dim:1,ja:"理論や概念について深く考えることが好きだ",zh:"我喜欢深入思考理论和概念",en:"I enjoy thinking deeply about theories and concepts",reversed:true},
+  {dim:1,ja:"日常の中に隠れた意味やシンボルを見つけることが楽しい",zh:"我喜欢在日常中发现隐藏的意义和象征",en:"I enjoy finding hidden meanings and symbols in everyday life",reversed:true},
   // T/F
-  {dim:2,text:"感情よりも論理的な理由に基づいて決断する"},
-  {dim:2,text:"友人の悩みを聞くとき、まず解決策を提案したい"},
-  {dim:2,text:"批判を受けても、感情的にならずに内容を受け止められる"},
-  {dim:2,text:"物事を公平に扱うことが、思いやりよりも重要だと思う"},
-  {dim:2,text:"人の気持ちよりも、正しいことを言う方が大切だと思う"},
-  {dim:2,text:"仕事では、成果と効率を個人の感情よりも優先する"},
-  {dim:2,text:"討論や議論を楽しめる"},
-  {dim:2,text:"感情に流されずに冷静な判断ができる"},
-  {dim:2,text:"他者の批判に傷つきやすい",reversed:true},
-  {dim:2,text:"周りの人の気持ちに敏感で、影響を受けやすい",reversed:true},
-  {dim:2,text:"人の感情やニーズに気づくのが得意だ",reversed:true},
-  {dim:2,text:"誰かが傷ついていると、自分も辛くなる",reversed:true},
-  {dim:2,text:"意見の不一致よりも、調和を保つことを優先する",reversed:true},
-  {dim:2,text:"褒め言葉や感謝の言葉が大きなモチベーションになる",reversed:true},
-  {dim:2,text:"人の話を聞くとき、まず感情的なサポートを提供したい",reversed:true},
+  {dim:2,ja:"感情よりも論理的な理由に基づいて決断する",zh:"我倾向于基于逻辑而非情感做决定",en:"I make decisions based on logic rather than feelings"},
+  {dim:2,ja:"友人の悩みを聞くとき、まず解決策を提案したい",zh:"朋友诉说烦恼时，我先想提供解决方案",en:"When friends share problems, I want to offer solutions first"},
+  {dim:2,ja:"批判を受けても、感情的にならずに内容を受け止められる",zh:"受到批评时我能冷静接受，不会情绪化",en:"I can accept criticism calmly without getting emotional"},
+  {dim:2,ja:"物事を公平に扱うことが、思いやりよりも重要だと思う",zh:"我认为公平比同情心更重要",en:"I think treating things fairly is more important than showing compassion"},
+  {dim:2,ja:"人の気持ちよりも、正しいことを言う方が大切だと思う",zh:"说正确的话比顾及别人感受更重要",en:"Saying the right thing matters more than protecting feelings"},
+  {dim:2,ja:"仕事では、成果と効率を個人の感情よりも優先する",zh:"工作中我将成果和效率置于个人情感之上",en:"At work, I prioritize results and efficiency over personal feelings"},
+  {dim:2,ja:"討論や議論を楽しめる",zh:"我享受讨论和辩论",en:"I enjoy debates and discussions"},
+  {dim:2,ja:"感情に流されずに冷静な判断ができる",zh:"我能不受情绪影响做出冷静判断",en:"I can make calm judgments without being swayed by emotions"},
+  {dim:2,ja:"他者の批判に傷つきやすい",zh:"别人的批评很容易伤害到我",en:"I'm easily hurt by criticism from others",reversed:true},
+  {dim:2,ja:"周りの人の気持ちに敏感で、影響を受けやすい",zh:"我对周围人的情绪很敏感，容易受到影响",en:"I'm sensitive to others' feelings and easily affected by them",reversed:true},
+  {dim:2,ja:"人の感情やニーズに気づくのが得意だ",zh:"我善于察觉他人的情绪和需求",en:"I'm good at noticing others' emotions and needs",reversed:true},
+  {dim:2,ja:"誰かが傷ついていると、自分も辛くなる",zh:"看到别人受伤，我自己也会难受",en:"When someone is hurt, I feel their pain too",reversed:true},
+  {dim:2,ja:"意見の不一致よりも、調和を保つことを優先する",zh:"我优先维持和谐，而非坚持己见",en:"I prioritize harmony over asserting my opinion",reversed:true},
+  {dim:2,ja:"褒め言葉や感謝の言葉が大きなモチベーションになる",zh:"赞美和感谢是我强大的动力",en:"Compliments and appreciation are strong motivators for me",reversed:true},
+  {dim:2,ja:"人の話を聞くとき、まず感情的なサポートを提供したい",zh:"听别人说话时，我先想给予情感支持",en:"When listening to others, I want to offer emotional support first",reversed:true},
   // J/P
-  {dim:3,text:"計画を立てて、それに沿って行動することが好きだ"},
-  {dim:3,text:"締め切りより前に仕事を終わらせることが多い"},
-  {dim:3,text:"部屋や机は整理整頓されている方だ"},
-  {dim:3,text:"旅行前には詳細なスケジュールを作る"},
-  {dim:3,text:"決断を下したら、迷わず実行に移すことが多い"},
-  {dim:3,text:"何かを始める前に、十分な計画を立てたい"},
-  {dim:3,text:"同時に複数のことをするよりも、一つずつ終わらせる方が好きだ"},
-  {dim:3,text:"毎日のルーティンを大切にしている"},
-  {dim:3,text:"予定が急に変わると、ストレスを感じる"},
-  {dim:3,text:"物事は白黒はっきりさせたい"},
-  {dim:3,text:"最終決定を先延ばしにして、より多くの選択肢を持っていたい",reversed:true},
-  {dim:3,text:"締め切りギリギリになって、やる気が出ることが多い",reversed:true},
-  {dim:3,text:"柔軟性を保ちながら、状況に応じて対応することが好きだ",reversed:true},
-  {dim:3,text:"予定外のことが起きると、むしろ楽しめる",reversed:true},
-  {dim:3,text:"計画よりも流れに任せることが多い",reversed:true},
-];
-
-const dimInfo = [
-  {icon:"🌐", name:"社交・コミュニケーション", left:"E（外向型）", right:"I（内向型）"},
-  {icon:"💡", name:"思考・情報処理", left:"S（感覚型）", right:"N（直感型）"},
-  {icon:"❤️", name:"意思決定", left:"T（思考型）", right:"F（感情型）"},
-  {icon:"🗂️", name:"生活スタイル", left:"J（判断型）", right:"P（知覚型）"},
+  {dim:3,ja:"計画を立てて、それに沿って行動することが好きだ",zh:"我喜欢制定计划并按计划行动",en:"I like making plans and following through on them"},
+  {dim:3,ja:"締め切りより前に仕事を終わらせることが多い",zh:"我通常在截止日期之前完成工作",en:"I usually finish work before the deadline"},
+  {dim:3,ja:"部屋や机は整理整頓されている方だ",zh:"我的房间和桌子通常很整洁",en:"My room and desk are usually organized"},
+  {dim:3,ja:"旅行前には詳細なスケジュールを作る",zh:"旅行前我会制定详细的行程",en:"I create detailed schedules before traveling"},
+  {dim:3,ja:"決断を下したら、迷わず実行に移すことが多い",zh:"做好决定后，我通常毫不犹豫地执行",en:"Once I make a decision, I act on it without hesitation"},
+  {dim:3,ja:"何かを始める前に、十分な計画を立てたい",zh:"开始做事前，我想做好充分的计划",en:"I want to plan thoroughly before starting something"},
+  {dim:3,ja:"同時に複数のことをするよりも、一つずつ終わらせる方が好きだ",zh:"比起同时做多件事，我更喜欢一件一件完成",en:"I prefer finishing one thing at a time rather than multitasking"},
+  {dim:3,ja:"毎日のルーティンを大切にしている",zh:"我很重视每天的日常规律",en:"I value my daily routine"},
+  {dim:3,ja:"予定が急に変わると、ストレスを感じる",zh:"计划突然改变会让我感到压力",en:"Sudden changes in plans make me feel stressed"},
+  {dim:3,ja:"物事は白黒はっきりさせたい",zh:"我喜欢把事情说清楚、分明白",en:"I like things to be clear-cut and decided"},
+  {dim:3,ja:"最終決定を先延ばしにして、より多くの選択肢を持っていたい",zh:"我喜欢推迟最终决定，保留更多选择",en:"I prefer to delay final decisions to keep more options open",reversed:true},
+  {dim:3,ja:"締め切りギリギリになって、やる気が出ることが多い",zh:"临近截止日期时，我才会充满干劲",en:"I often get motivated when the deadline is near",reversed:true},
+  {dim:3,ja:"柔軟性を保ちながら、状況に応じて対応することが好きだ",zh:"我喜欢灵活应变，随机应对",en:"I like staying flexible and adapting to situations as they unfold",reversed:true},
+  {dim:3,ja:"予定外のことが起きると、むしろ楽しめる",zh:"发生意外情况时，我反而觉得有趣",en:"When unexpected things happen, I actually enjoy the surprise",reversed:true},
+  {dim:3,ja:"計画よりも流れに任せることが多い",zh:"我常常随遇而安，顺其自然",en:"I often go with the flow rather than sticking to a plan",reversed:true},
 ];
 
 const results = {
-  INTJ:{emoji:"🔭",nick:"戦略家",desc:"論理的で独立心が強く、長期的なビジョンを持つ戦略家タイプ。複雑な問題をシステム的に考えるのが得意で、高い基準を持ちながら目標に向かって着実に進みます。一見クールに見えるけれど、深いところでは熱い情熱を秘めています✨",traits:["戦略的思考","独立心強い","完璧主義","長期ビジョン"]},
-  INTP:{emoji:"🧩",nick:"論理学者",desc:"知的好奇心旺盛で、世界のしくみを理解したいタイプ。アイデアを深く掘り下げるのが大好き。少し内向的だけど、好きなテーマになると止まらないくらいおしゃべりになります🧠",traits:["分析的","創造的","客観的","理論好き"]},
-  ENTJ:{emoji:"👑",nick:"指揮官",desc:"生まれながらのリーダー！目標達成のためなら障壁も乗り越えます。効率と成果を重視し、組織やプロジェクトをまとめる力があります。頼もしさ抜群の存在です💪",traits:["リーダーシップ","決断力","戦略家","野心的"]},
-  ENTP:{emoji:"💡",nick:"討論者",desc:"アイデアマンで、常識に挑戦するのが好き！議論を楽しみ、あらゆる可能性を探ります。スピード感と機転の利かせ方が魅力。飽きっぽいけど、その分いつも新しい面白いことを見つけてくる🎯",traits:["機転が利く","議論好き","革新的","エネルギッシュ"]},
-  INFJ:{emoji:"🌟",nick:"提唱者",desc:"深い洞察力と強い共感力を持つ稀少なタイプ。人の感情を読み取るのが得意で、理想の未来に向けて静かに情熱を燃やします。繊細だけど芯の強さを持つ不思議な存在✨",traits:["共感力高い","洞察力","理想主義","クリエイティブ"]},
-  INFP:{emoji:"🌈",nick:"仲介者",desc:"夢見がちな理想主義者。自分の価値観に正直に生きることを大切にします。創造性豊かで感情表現が豊か。見た目は穏やかだけど、大切にしているものへの情熱はとても強い🎨",traits:["感受性豊か","創造的","誠実","理想主義"]},
-  ENFJ:{emoji:"🌺",nick:"主人公",desc:"カリスマ的な存在感で周りを引っ張るタイプ。人の可能性を信じて成長をサポートするのが得意。自然とリーダーになりがちで、みんなに慕われます💖",traits:["カリスマ","共感力","利他的","コミュニケーション上手"]},
-  ENFP:{emoji:"🦋",nick:"広報運動家",desc:"自由で情熱的な探求者！新しいアイデアと人への興味が尽きません。感染力のある明るさでみんなを元気にします。いつも何かワクワクすることを探している🌈",traits:["熱狂的","創造的","社交的","自由奔放"]},
-  ISTJ:{emoji:"📚",nick:"管理者",desc:"責任感が強く、約束を守ることを大切にする信頼の置けるタイプ。実直で丁寧な仕事ぶりが評価されます。伝統と秩序を重んじる、縁の下の力持ち💪",traits:["責任感強い","几帳面","誠実","忍耐力"]},
-  ISFJ:{emoji:"🌷",nick:"擁護者",desc:"思いやりにあふれる守護者タイプ。大切な人を支えることに喜びを感じます。細やかな気配りで周りをほっとさせる存在💗",traits:["思いやり","気配り上手","忠実","実直"]},
-  ESTJ:{emoji:"⚡",nick:"幹部",desc:"秩序と組織をまとめる生まれながらの管理者。物事を効率的に進め、ルールとコミットメントを大切にします。頼れるムードメーカーでもあります🔥",traits:["組織力","リーダーシップ","実直","効率重視"]},
-  ESFJ:{emoji:"🎀",nick:"領事官",desc:"社交的で思いやり溢れるタイプ。周りの人が幸せかどうかを常に気にかけます。チームの雰囲気をよくするムードメーカー！💝",traits:["社交的","思いやり","チームワーク","協調性"]},
-  ISTP:{emoji:"🔧",nick:"巨匠",desc:"クールで観察眼鋭い問題解決者。手を動かして物事を理解するのが得意で、実用的なスキルに長けています。独立心が強く、いざというときに頼りになる存在🛠️",traits:["観察眼","実用的","冷静","独立心"]},
-  ISFP:{emoji:"🎨",nick:"冒険者",desc:"穏やかで感受性豊かなアーティストタイプ。美しいものや自分の価値観に従って生きることを大切にします。内向的に見えるけど、ワクワクする体験は大歓迎🌸",traits:["感受性","芸術的","柔軟","自由を愛する"]},
-  ESTP:{emoji:"🎯",nick:"起業家",desc:"エネルギッシュで行動力抜群！今この瞬間を楽しむことが大好き。リスクを恐れず、瞬発力で状況を打開する実行力派🚀",traits:["行動力","エネルギッシュ","大胆","観察眼"]},
-  ESFP:{emoji:"🎉",nick:"エンターテイナー",desc:"人生を全力で楽しむエンタメ系タイプ！いるだけで場が明るくなる存在。みんなを笑顔にするのが自然体の大スター✨",traits:["明るい","社交的","即興力","楽しむ天才"]},
+  INTJ:{emoji:"🔭",
+    nick:{ja:"戦略家",zh:"战略家",en:"Architect"},
+    desc:{
+      ja:"論理的で独立心が強く、長期的なビジョンを持つ戦略家タイプ。複雑な問題をシステム的に考えるのが得意で、高い基準を持ちながら目標に向かって着実に進みます。一見クールに見えるけれど、深いところでは熱い情熱を秘めています✨",
+      zh:"逻辑严密、独立思考，拥有长期战略眼光的完美主义者。善于系统性地思考复杂问题，拥有高标准并稳步向目标前进。看似冷酷，内心深处其实充满热情✨",
+      en:"Logical, independent, and visionary strategist. Great at systematic thinking, holds high standards, and steadily pursues goals. May seem cool on the surface but burns with inner passion✨"
+    },
+    traits:["戦略的思考","独立心強い","完璧主義","長期ビジョン"]},
+  INTP:{emoji:"🧩",
+    nick:{ja:"論理学者",zh:"逻辑学家",en:"Logician"},
+    desc:{
+      ja:"知的好奇心旺盛で、世界のしくみを理解したいタイプ。アイデアを深く掘り下げるのが大好き。少し内向的だけど、好きなテーマになると止まらないくらいおしゃべりになります🧠",
+      zh:"求知欲旺盛，渴望理解世界运作方式的类型。深爱挖掘想法，略显内向，但一旦聊到感兴趣的话题就停不下来🧠",
+      en:"Intellectually curious type who wants to understand how the world works. Loves diving deep into ideas. A bit introverted, but becomes unstoppable when talking about their interests🧠"
+    },
+    traits:["分析的","創造的","客観的","理論好き"]},
+  ENTJ:{emoji:"👑",
+    nick:{ja:"指揮官",zh:"指挥官",en:"Commander"},
+    desc:{
+      ja:"生まれながらのリーダー！目標達成のためなら障壁も乗り越えます。効率と成果を重視し、組織やプロジェクトをまとめる力があります。頼もしさ抜群の存在です💪",
+      zh:"天生的领导者！为实现目标不惜克服一切障碍。重视效率与成果，善于统领组织和项目。超级可靠的存在💪",
+      en:"Born leader who overcomes obstacles to achieve goals. Values efficiency and results, excels at managing teams and projects. Incredibly reliable💪"
+    },
+    traits:["リーダーシップ","決断力","戦略家","野心的"]},
+  ENTP:{emoji:"💡",
+    nick:{ja:"討論者",zh:"辩论家",en:"Debater"},
+    desc:{
+      ja:"アイデアマンで、常識に挑戦するのが好き！議論を楽しみ、あらゆる可能性を探ります。スピード感と機転の利かせ方が魅力。飽きっぽいけど、その分いつも新しい面白いことを見つけてくる🎯",
+      zh:"点子王，喜欢挑战常规！享受辩论，探索所有可能性。以快速反应和机智著称。容易厌倦，但总能发现新鲜有趣的事物🎯",
+      en:"Idea generator who loves challenging norms! Enjoys debates and exploring possibilities. Known for quick thinking and wit. Easily bored but always finds something new and exciting🎯"
+    },
+    traits:["機転が利く","議論好き","革新的","エネルギッシュ"]},
+  INFJ:{emoji:"🌟",
+    nick:{ja:"提唱者",zh:"提倡者",en:"Advocate"},
+    desc:{
+      ja:"深い洞察力と強い共感力を持つ稀少なタイプ。人の感情を読み取るのが得意で、理想の未来に向けて静かに情熱を燃やします。繊細だけど芯の強さを持つ不思議な存在✨",
+      zh:"拥有深刻洞察力和强烈共情能力的稀有类型。善于读懂他人情绪，静静地为理想未来燃烧热情。外表敏感，内心却无比坚强✨",
+      en:"Rare type with deep insight and strong empathy. Great at reading emotions, quietly passionate about an ideal future. Appears sensitive but has incredible inner strength✨"
+    },
+    traits:["共感力高い","洞察力","理想主義","クリエイティブ"]},
+  INFP:{emoji:"🌈",
+    nick:{ja:"仲介者",zh:"调停者",en:"Mediator"},
+    desc:{
+      ja:"夢見がちな理想主義者。自分の価値観に正直に生きることを大切にします。創造性豊かで感情表現が豊か。見た目は穏やかだけど、大切にしているものへの情熱はとても強い🎨",
+      zh:"充满梦想的理想主义者。重视忠于自己的价值观生活。创造力丰富，情感表达细腻。外表温和，但对所珍视之物充满强烈热情🎨",
+      en:"Dreamy idealist who values living true to their values. Creative and emotionally expressive. Appears gentle but burns with passion for what they care about🎨"
+    },
+    traits:["感受性豊か","創造的","誠実","理想主義"]},
+  ENFJ:{emoji:"🌺",
+    nick:{ja:"主人公",zh:"主人公",en:"Protagonist"},
+    desc:{
+      ja:"カリスマ的な存在感で周りを引っ張るタイプ。人の可能性を信じて成長をサポートするのが得意。自然とリーダーになりがちで、みんなに慕われます💖",
+      zh:"以超凡魅力引领他人的类型。相信他人的潜力，擅长支持他人成长。自然而然成为领导者，深受众人爱戴💖",
+      en:"Charismatic leader who guides others. Believes in people's potential and excels at supporting growth. Naturally becomes a leader and is beloved by all💖"
+    },
+    traits:["カリスマ","共感力","利他的","コミュニケーション上手"]},
+  ENFP:{emoji:"🦋",
+    nick:{ja:"運動家",zh:"竞选者",en:"Campaigner"},
+    desc:{
+      ja:"自由で情熱的な探求者！新しいアイデアと人への興味が尽きません。感染力のある明るさでみんなを元気にします。いつも何かワクワクすることを探している🌈",
+      zh:"自由奔放的热情探索者！对新想法和人充满无尽好奇。用感染力十足的活力让身边的人元气满满🌈",
+      en:"Free-spirited and passionate explorer! Endlessly curious about new ideas and people. Energizes everyone around them with infectious enthusiasm🌈"
+    },
+    traits:["熱狂的","創造的","社交的","自由奔放"]},
+  ISTJ:{emoji:"📚",
+    nick:{ja:"管理者",zh:"物流师",en:"Logistician"},
+    desc:{
+      ja:"責任感が強く、約束を守ることを大切にする信頼の置けるタイプ。実直で丁寧な仕事ぶりが評価されます。伝統と秩序を重んじる、縁の下の力持ち💪",
+      zh:"责任感强，重视信守承诺，值得信赖的类型。以踏实认真的工作态度受到好评。重视传统与秩序，是幕后的支柱💪",
+      en:"Responsible, reliable, and committed to keeping promises. Valued for their diligent work ethic. Upholds tradition and order, the backbone behind the scenes💪"
+    },
+    traits:["責任感強い","几帳面","誠実","忍耐力"]},
+  ISFJ:{emoji:"🌷",
+    nick:{ja:"擁護者",zh:"守卫者",en:"Defender"},
+    desc:{
+      ja:"思いやりにあふれる守護者タイプ。大切な人を支えることに喜びを感じます。細やかな気配りで周りをほっとさせる存在💗",
+      zh:"充满体贴的守护者类型。从支持重要的人中获得喜悦。以细腻的关怀让周围的人感到安心💗",
+      en:"Caring protector who finds joy in supporting loved ones. Their thoughtful attention puts those around them at ease💗"
+    },
+    traits:["思いやり","気配り上手","忠実","実直"]},
+  ESTJ:{emoji:"⚡",
+    nick:{ja:"幹部",zh:"总经理",en:"Executive"},
+    desc:{
+      ja:"秩序と組織をまとめる生まれながらの管理者。物事を効率的に進め、ルールとコミットメントを大切にします。頼れるムードメーカーでもあります🔥",
+      zh:"天生的管理者，善于维护秩序与组织。做事高效，重视规则与承诺。是值得依赖的存在🔥",
+      en:"Natural manager who maintains order and organization. Works efficiently and values rules and commitment. A truly dependable presence🔥"
+    },
+    traits:["組織力","リーダーシップ","実直","効率重視"]},
+  ESFJ:{emoji:"🎀",
+    nick:{ja:"領事官",zh:"执政官",en:"Consul"},
+    desc:{
+      ja:"社交的で思いやり溢れるタイプ。周りの人が幸せかどうかを常に気にかけます。チームの雰囲気をよくするムードメーカー！💝",
+      zh:"开朗又充满体贴的类型。时刻关心周围人是否幸福。是活跃气氛的氛围担当！💝",
+      en:"Sociable and caring type who always looks out for others' happiness. The mood-maker who brightens any group💝"
+    },
+    traits:["社交的","思いやり","チームワーク","協調性"]},
+  ISTP:{emoji:"🔧",
+    nick:{ja:"巨匠",zh:"鉴赏家",en:"Virtuoso"},
+    desc:{
+      ja:"クールで観察眼鋭い問題解決者。手を動かして物事を理解するのが得意で、実用的なスキルに長けています。独立心が強く、いざというときに頼りになる存在🛠️",
+      zh:"冷静沉着、观察敏锐的问题解决者。善于动手理解事物，实用技能出众。独立自主，关键时刻格外可靠🛠️",
+      en:"Cool, observant problem-solver. Learns by doing and excels at practical skills. Independent and incredibly reliable in critical moments🛠️"
+    },
+    traits:["観察眼","実用的","冷静","独立心"]},
+  ISFP:{emoji:"🎨",
+    nick:{ja:"冒険者",zh:"探险家",en:"Adventurer"},
+    desc:{
+      ja:"穏やかで感受性豊かなアーティストタイプ。美しいものや自分の価値観に従って生きることを大切にします。内向的に見えるけど、ワクワクする体験は大歓迎🌸",
+      zh:"温和而感受性丰富的艺术家类型。珍视美好事物和忠于自己价值观的生活🌸",
+      en:"Gentle, sensitive artist type. Values beauty and living true to their own values🌸"
+    },
+    traits:["感受性","芸術的","柔軟","自由を愛する"]},
+  ESTP:{emoji:"🎯",
+    nick:{ja:"起業家",zh:"企业家",en:"Entrepreneur"},
+    desc:{
+      ja:"エネルギッシュで行動力抜群！今この瞬間を楽しむことが大好き。リスクを恐れず、瞬発力で状況を打開する実行力派🚀",
+      zh:"活力四射、行动力十足！热爱享受当下，不惧风险，以爆发力打破困境的实干派🚀",
+      en:"Energetic and action-oriented! Loves living in the moment, takes risks, and breaks through obstacles with explosive energy🚀"
+    },
+    traits:["行動力","エネルギッシュ","大胆","観察眼"]},
+  ESFP:{emoji:"🎉",
+    nick:{ja:"芸能人",zh:"表演者",en:"Entertainer"},
+    desc:{
+      ja:"人生を全力で楽しむエンタメ系タイプ！いるだけで場が明るくなる存在。みんなを笑顔にするのが自然体の大スター✨",
+      zh:"全力享受人生的娱乐系类型！只要在场就能让气氛变好。让所有人微笑是ta的本能✨",
+      en:"Life-of-the-party entertainer! Brightens any room just by being there. Making everyone smile comes naturally✨"
+    },
+    traits:["明るい","社交的","即興力","楽しむ天才"]},
 };
 
 const PAYMENT_LINKS = { default:'https://buy.stripe.com/YOUR_PAYMENT_LINK' };
@@ -529,7 +731,70 @@ const PAYMENT_LINKS = { default:'https://buy.stripe.com/YOUR_PAYMENT_LINK' };
 let scores = [0,0,0,0];
 let answered = 0;
 let currentType = '';
+let currentLang = 'ja';
 
+// ============================================================
+// Language switching
+// ============================================================
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.title = i18n[lang].title;
+
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  const t = i18n[lang];
+
+  // Update all data-i18n elements (simple text)
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) {
+      el.innerHTML = t[key];
+    }
+  });
+
+  // Update type nicks in char grid
+  document.querySelectorAll('[data-type-nick]').forEach(el => {
+    const type = el.dataset.typeNick;
+    if (results[type]) el.textContent = results[type].nick[lang];
+  });
+
+  // Update start-desc (has HTML)
+  const startDesc = document.getElementById('start-desc');
+  if (startDesc) startDesc.innerHTML = t.startDesc;
+
+  // Update progress label if quiz is active
+  if (document.getElementById('quiz-form').style.display !== 'none') {
+    updateProgress();
+    // Update quiz question texts and scale labels
+    questions.forEach((q, i) => {
+      const qtext = document.getElementById('qtext' + i);
+      if (qtext) qtext.textContent = q[lang];
+    });
+    document.querySelectorAll('.scale-label-left').forEach(el => el.textContent = t.scaleLeft);
+    document.querySelectorAll('.scale-label-mid').forEach(el => el.textContent = t.scaleMid);
+    document.querySelectorAll('.scale-label-right').forEach(el => el.textContent = t.scaleRight);
+    // Update dim headers
+    const dimHeaderNames = document.querySelectorAll('.dim-header-name');
+    dimHeaderNames.forEach((el, idx) => {
+      if (t.dimInfoNames[idx]) el.textContent = t.dimInfoNames[idx];
+    });
+  }
+
+  // Update result if shown
+  if (document.getElementById('result-screen').style.display !== 'none' && currentType) {
+    const r = results[currentType];
+    document.getElementById('res-nick').textContent = t.nickSuffix(r.nick[lang]);
+    document.getElementById('res-desc').textContent = r.desc[lang];
+  }
+}
+
+// ============================================================
+// Quiz
+// ============================================================
 function startQuiz() {
   document.getElementById('intro-card').style.display = 'none';
   window.scrollTo({top:0,behavior:'smooth'});
@@ -538,9 +803,21 @@ function startQuiz() {
   document.getElementById('quiz-form').style.display = 'block';
 }
 
+function getDimInfo() {
+  const t = i18n[currentLang];
+  return [
+    {icon:"🌐", name:t.dimInfoNames[0], left:t.dimInfoLeft[0], right:t.dimInfoRight[0]},
+    {icon:"💡", name:t.dimInfoNames[1], left:t.dimInfoLeft[1], right:t.dimInfoRight[1]},
+    {icon:"❤️", name:t.dimInfoNames[2], left:t.dimInfoLeft[2], right:t.dimInfoRight[2]},
+    {icon:"🗂️", name:t.dimInfoNames[3], left:t.dimInfoLeft[3], right:t.dimInfoRight[3]},
+  ];
+}
+
 function buildQuiz() {
   const form = document.getElementById('quiz-form');
-  // Group by dim
+  const t = i18n[currentLang];
+  const dimInfo = getDimInfo();
+
   const dims = [[],[],[],[]];
   questions.forEach((q,i) => dims[q.dim].push({...q, idx:i}));
 
@@ -550,21 +827,24 @@ function buildQuiz() {
     html += `<div class="dim-section">
       <div class="dim-header">
         <span class="dim-icon">${info.icon}</span>
-        <h2>${info.name}</h2>
-        <span>${qs.length}問</span>
+        <h2 class="dim-header-name" data-dim-idx="${d}">${info.name}</h2>
+        <span>${qs.length}Q</span>
       </div>`;
     qs.forEach((q,qi) => {
       const vals = [3,2,1,0,-1,-2,-3];
-      const labels = ['強く同意','同意','やや同意','中立','やや不同意','不同意','強く不同意'];
       let btns = vals.map((v,vi) => `
         <input type="radio" name="q${q.idx}" id="q${q.idx}_${vi}" value="${v}" onchange="onAnswer(${q.idx})">
-        <label for="q${q.idx}_${vi}" title="${labels[vi]}">${v>0?'+'+v:v}</label>
+        <label for="q${q.idx}_${vi}">${v>0?'+'+v:v}</label>
       `).join('');
       html += `<div class="q-card" id="qcard${q.idx}">
         <div class="q-num">Q${q.idx+1}</div>
-        <div class="q-text">${q.text}</div>
+        <div class="q-text" id="qtext${q.idx}">${q[currentLang]}</div>
         <div class="scale-wrap">
-          <div class="scale-labels"><span>👍 強く同意</span><span>中立</span><span>強く不同意 👎</span></div>
+          <div class="scale-labels">
+            <span class="scale-label-left">${t.scaleLeft}</span>
+            <span class="scale-label-mid">${t.scaleMid}</span>
+            <span class="scale-label-right">${t.scaleRight}</span>
+          </div>
           <div class="scale-btns">${btns}</div>
         </div>
       </div>`;
@@ -588,8 +868,9 @@ function onAnswer(idx) {
 }
 
 function updateProgress() {
+  const t = i18n[currentLang];
   const pct = Math.round((answered / questions.length) * 100);
-  document.getElementById('prog-label').textContent = `${answered} / ${questions.length}問回答済み`;
+  document.getElementById('prog-label').textContent = t.progLabel(answered);
   document.getElementById('prog-pct').textContent = `${pct}%`;
   document.getElementById('prog-fill').style.width = pct + '%';
 }
@@ -622,12 +903,13 @@ function showResult() {
 
   currentType = getType();
   const r = results[currentType];
+  const t = i18n[currentLang];
 
   document.getElementById('res-emoji').textContent = r.emoji;
   document.getElementById('res-type').textContent = currentType;
-  document.getElementById('res-nick').textContent = `「${r.nick}」タイプ`;
-  document.getElementById('res-desc').textContent = r.desc;
-  document.getElementById('res-traits').innerHTML = r.traits.map(t=>`<span class="trait">${t}</span>`).join('');
+  document.getElementById('res-nick').textContent = t.nickSuffix(r.nick[currentLang]);
+  document.getElementById('res-desc').textContent = r.desc[currentLang];
+  document.getElementById('res-traits').innerHTML = r.traits.map(tr=>`<span class="trait">${tr}</span>`).join('');
 
   const maxScore = 45;
   const dimNames = [['E','I'],['S','N'],['T','F'],['J','P']];
@@ -642,7 +924,6 @@ function showResult() {
     </div>`;
   }).join('');
 
-  // Premium preview
   document.getElementById('prem-preview-text').textContent =
     `${currentType}タイプは職場での強みが特にXXXにあります。対人関係においては、XXXな傾向があり、恋愛ではXXXなパートナーと相性が良いです。ストレスを感じたときはXXXな対処法が効果的です...`;
 
@@ -663,16 +944,21 @@ function retryQuiz() {
 
 function shareToLine() {
   const r = results[currentType];
-  const text = encodeURIComponent(`私のMBTIは【${currentType}】${r.nick}でした！🌸 あなたも試してみて → ${location.href} #MBTI診断 #性格診断`);
+  const t = i18n[currentLang];
+  const text = encodeURIComponent(t.shareText(currentType, r.nick[currentLang]));
   window.open(`https://line.me/R/msg/text/?${text}`,'_blank');
 }
 
 function shareToX() {
   const r = results[currentType];
-  const text = encodeURIComponent(`私のMBTIは【${currentType}】${r.nick}でした！🌸 #MBTI診断 #性格診断`);
+  const t = i18n[currentLang];
+  const text = encodeURIComponent(t.shareXText(currentType, r.nick[currentLang]));
   const url = encodeURIComponent(location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank');
 }
+
+// Initialize with default language
+setLang('ja');
 </script>
 </body>
 </html>
